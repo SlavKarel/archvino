@@ -1,0 +1,37 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { getHomePageContent, getSiteSettings } from '../../lib/content';
+import { LOCALES, isLocale, type Locale } from '../../lib/i18n';
+import { buildDefaultSeo } from '../../lib/seo';
+
+export function getStaticPaths() {
+  return LOCALES.map((locale) => ({ params: { locale } }));
+}
+
+const { locale: localeParam } = Astro.params;
+
+if (!localeParam || !isLocale(localeParam)) {
+  return Astro.redirect('/ru/');
+}
+
+const locale: Locale = localeParam;
+
+const [settings, home, seo] = await Promise.all([
+  getSiteSettings(),
+  getHomePageContent(locale),
+  buildDefaultSeo(locale),
+]);
+---
+
+<PageLayout
+  locale={locale}
+  pathname={Astro.url.pathname}
+  settings={settings}
+  title={seo.title}
+  description={seo.description}
+>
+  <section class="page-intro">
+    <h1>{home.headline}</h1>
+    <p>{home.intro}</p>
+  </section>
+</PageLayout>

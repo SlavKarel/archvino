@@ -1,0 +1,29 @@
+---
+import type { Locale } from '../../lib/i18n';
+import { LOCALES } from '../../lib/i18n';
+import { buildLocaleSwitchPath } from '../../lib/routes';
+
+type Props = {
+  locale: Locale;
+  pathname: string;
+  labels: Record<Locale, string>;
+};
+
+const { locale, pathname, labels } = Astro.props;
+---
+
+<div class="locale-switcher" aria-label="Locale switcher">
+  {
+    LOCALES.map((targetLocale) => (
+      <a
+        href={buildLocaleSwitchPath(pathname, targetLocale)}
+        hreflang={targetLocale}
+        title={labels[targetLocale]}
+        aria-label={`${targetLocale.toUpperCase()} ${labels[targetLocale]}`}
+        aria-current={targetLocale === locale ? 'page' : undefined}
+      >
+        {targetLocale.toUpperCase()}
+      </a>
+    ))
+  }
+</div>

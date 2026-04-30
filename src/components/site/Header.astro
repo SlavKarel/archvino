@@ -1,0 +1,31 @@
+---
+import type { Locale } from '../../lib/i18n';
+import Nav from './Nav.astro';
+import LocaleSwitcher from './LocaleSwitcher.astro';
+
+type Props = {
+  locale: Locale;
+  pathname: string;
+  studioName: string;
+  navigation: {
+    home: string;
+    projects: string;
+    about: string;
+    services: string;
+    contact: string;
+  };
+  localeLabels: Record<Locale, string>;
+};
+
+const { locale, pathname, studioName, navigation, localeLabels } = Astro.props;
+---
+
+<header class="site-header">
+  <div class="shell site-header__inner">
+    <a class="site-header__brand" href={`/${locale}/`}>{studioName}</a>
+    <div class="site-header__controls">
+      <Nav locale={locale} navigation={navigation} />
+      <LocaleSwitcher locale={locale} pathname={pathname} labels={localeLabels} />
+    </div>
+  </div>
+</header>

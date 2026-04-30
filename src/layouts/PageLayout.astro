@@ -1,0 +1,49 @@
+---
+import type { Locale } from '../lib/i18n';
+import type { SiteSettings } from '../lib/content';
+import { getLocalizedValue } from '../lib/i18n';
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/site/Header.astro';
+import Footer from '../components/site/Footer.astro';
+
+type Props = {
+  locale: Locale;
+  pathname: string;
+  settings: SiteSettings;
+  title: string;
+  description: string;
+};
+
+const { locale, pathname, settings, title, description } = Astro.props;
+
+const navigation = {
+  home: getLocalizedValue(settings.navigation.home, locale),
+  projects: getLocalizedValue(settings.navigation.projects, locale),
+  about: getLocalizedValue(settings.navigation.about, locale),
+  services: getLocalizedValue(settings.navigation.services, locale),
+  contact: getLocalizedValue(settings.navigation.contact, locale),
+};
+
+const localeLabels = {
+  ru: getLocalizedValue(settings.localeLabels.ru, locale),
+  en: getLocalizedValue(settings.localeLabels.en, locale),
+};
+
+const footerText = getLocalizedValue(settings.footerText, locale);
+---
+
+<BaseLayout locale={locale} title={title} description={description}>
+  <div class="site-frame">
+    <Header
+      locale={locale}
+      pathname={pathname}
+      studioName={settings.studioName}
+      navigation={navigation}
+      localeLabels={localeLabels}
+    />
+    <main class="shell page-main">
+      <slot />
+    </main>
+    <Footer text={footerText} />
+  </div>
+</BaseLayout>

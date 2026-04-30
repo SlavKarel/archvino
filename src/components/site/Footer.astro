@@ -1,0 +1,13 @@
+---
+type Props = {
+  text: string;
+};
+
+const { text } = Astro.props;
+---
+
+<footer class="site-footer">
+  <div class="shell site-footer__inner">
+    <p>{text}</p>
+  </div>
+</footer>

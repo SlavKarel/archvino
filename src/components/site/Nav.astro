@@ -1,0 +1,37 @@
+---
+import type { Locale } from '../../lib/i18n';
+import { buildHomePath, buildPagePath } from '../../lib/routes';
+
+type Props = {
+  locale: Locale;
+  navigation: {
+    home: string;
+    projects: string;
+    about: string;
+    services: string;
+    contact: string;
+  };
+};
+
+const { locale, navigation } = Astro.props;
+
+const links = [
+  { href: buildHomePath(locale), label: navigation.home },
+  { href: buildPagePath(locale, '/projects'), label: navigation.projects },
+  { href: buildPagePath(locale, '/about'), label: navigation.about },
+  { href: buildPagePath(locale, '/services'), label: navigation.services },
+  { href: buildPagePath(locale, '/contact'), label: navigation.contact },
+];
+---
+
+<nav aria-label="Primary">
+  <ul class="site-nav__list">
+    {
+      links.map((link) => (
+        <li>
+          <a href={link.href}>{link.label}</a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>

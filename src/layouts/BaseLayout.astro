@@ -1,0 +1,23 @@
+---
+import type { Locale } from '../lib/i18n';
+import SeoHead from '../components/site/SeoHead.astro';
+import '../styles/global.css';
+
+type Props = {
+  locale: Locale;
+  title: string;
+  description: string;
+};
+
+const { locale, title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <SeoHead title={title} description={description} />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
