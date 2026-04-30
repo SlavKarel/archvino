@@ -1,0 +1,21 @@
+id: home
+headline:
+  ru: Тихая архитектура для повседневной жизни.
+  en: Quiet architecture for everyday life.
+intro:
+  ru: Проектируем дома, интерьеры и общественные пространства с вниманием к свету, ритму и материалу.
+  en: We design homes, interiors, and public spaces with attention to light, rhythm, and material.
+featuredProjectSlugs:
+  - villa-moscow
+  - gallery-house
+  - studio-loft
+contactCta:
+  heading:
+    ru: Обсудить будущий проект
+    en: Discuss a future project
+  body:
+    ru: Напишите нам, чтобы обсудить участок, интерьер или реконструкцию.
+    en: Write to us to discuss a site, interior, or renovation.
+  label:
+    ru: Связаться
+    en: Contact us

@@ -1,0 +1,17 @@
+id: services
+title:
+  ru: Услуги
+  en: Services
+intro:
+  ru: Мы ведем проект последовательно, чтобы решения по пространству, бюджету и реализации оставались согласованными.
+  en: We guide each project in sequence so spatial, budget, and delivery decisions stay aligned.
+items:
+  - ru: Архитектурная концепция и планировочные сценарии
+    en: Architectural concept and planning scenarios
+  - ru: Интерьер и подбор материалов
+    en: Interior design and material selection
+  - ru: Авторский надзор и сопровождение реализации
+    en: Construction supervision and delivery support
+cta:
+  ru: Расскажите о задаче, и мы предложим комфортный формат работы.
+  en: Tell us about your brief and we will suggest a comfortable way to work together.

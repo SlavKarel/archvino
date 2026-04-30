@@ -1,0 +1,54 @@
+slug: villa-moscow
+category: residential
+year: 2024
+location:
+  ru: Подмосковье
+  en: Moscow region
+status:
+  ru: В реализации
+  en: In progress
+featured: true
+order: 1
+title:
+  ru: Вилла у сосен
+  en: Villa Among Pines
+summary:
+  ru: Загородный дом, где план раскрывается вокруг света, сада и последовательности приватных комнат.
+  en: A country house organized around light, the garden, and a sequence of private rooms.
+cover:
+  src: /src/assets/projects/villa-moscow/cover.jpg
+  alt:
+    ru: Фасад виллы среди сосен
+    en: Villa facade among pine trees
+gallery:
+  - src: /src/assets/projects/villa-moscow/gallery-1.jpg
+    alt:
+      ru: Гостиная виллы с панорамным остеклением
+      en: Villa living room with panoramic glazing
+  - src: /src/assets/projects/villa-moscow/gallery-2.jpg
+    alt:
+      ru: Терраса виллы, выходящая в сад
+      en: Villa terrace opening to the garden
+  - src: /src/assets/projects/villa-moscow/gallery-3.jpg
+    alt:
+      ru: Лестница из дерева и светлого камня
+      en: Stair built from timber and pale stone
+sections:
+  - label:
+      ru: Контекст
+      en: Context
+    heading:
+      ru: Дом встроен в лесной участок.
+      en: The house is set into a wooded site.
+    body:
+      ru: Объемы развернуты так, чтобы сохранить существующие сосны и открыть основные помещения к южному свету.
+      en: The volumes are arranged to preserve the existing pines and open the main rooms to southern light.
+  - label:
+      ru: Планировка
+      en: Planning
+    heading:
+      ru: Пространства связаны спокойной анфиладой.
+      en: The spaces are linked by a calm enfilade.
+    body:
+      ru: Общие комнаты собраны на первом уровне, а более тихие спальни и рабочие зоны подняты выше.
+      en: Shared rooms are gathered on the first level while quieter bedrooms and work areas move above.

@@ -1,0 +1,54 @@
+slug: studio-loft
+category: interiors
+year: 2022
+location:
+  ru: Санкт-Петербург
+  en: Saint Petersburg
+status:
+  ru: Завершен
+  en: Completed
+featured: false
+order: 3
+title:
+  ru: Студия-лофт
+  en: Studio Loft
+summary:
+  ru: Компактный интерьер для работы и встреч с мягким зонированием и вниманием к естественному свету.
+  en: A compact work-and-meeting interior with soft zoning and careful attention to daylight.
+cover:
+  src: /src/assets/projects/studio-loft/cover.jpg
+  alt:
+    ru: Интерьер студии-лофта
+    en: Interior of the studio loft
+gallery:
+  - src: /src/assets/projects/studio-loft/gallery-1.jpg
+    alt:
+      ru: Общая рабочая зона студии
+      en: Shared working zone of the studio
+  - src: /src/assets/projects/studio-loft/gallery-2.jpg
+    alt:
+      ru: Переговорная с деревянной отделкой
+      en: Meeting room with timber finishes
+  - src: /src/assets/projects/studio-loft/gallery-3.jpg
+    alt:
+      ru: Кухонный остров и библиотека
+      en: Kitchen island and library wall
+sections:
+  - label:
+      ru: Пространство
+      en: Space
+    heading:
+      ru: Один объем делится текстурой и мебелью.
+      en: One volume is divided through texture and furniture.
+    body:
+      ru: Рабочие, встречные и бытовые функции собраны без жестких перегородок, чтобы интерьер оставался гибким.
+      en: Work, meeting, and support functions are combined without rigid partitions so the interior stays flexible.
+  - label:
+      ru: Свет
+      en: Light
+    heading:
+      ru: Свет раскрывает глубину бывшего промышленного пространства.
+      en: Light reveals the depth of the former industrial shell.
+    body:
+      ru: Новые поверхности и мебель отражают дневной свет и делают помещение спокойнее в течение всего дня.
+      en: New surfaces and furniture reflect daylight and make the space feel calmer throughout the day.

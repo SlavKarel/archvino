@@ -1,0 +1,55 @@
+studioName: Archvino
+logo:
+  src: /src/assets/site/logo.svg
+  alt:
+    ru: Логотип Archvino
+    en: Archvino logo
+navigation:
+  home:
+    ru: Главная
+    en: Home
+  projects:
+    ru: Проекты
+    en: Projects
+  about:
+    ru: О нас
+    en: About
+  services:
+    ru: Услуги
+    en: Services
+  contact:
+    ru: Контакты
+    en: Contact
+footerText:
+  ru: Архитектурная практика для частных и общественных пространств.
+  en: Architectural practice for private and public spaces.
+localeLabels:
+  ru:
+    ru: Русский
+    en: Russian
+  en:
+    ru: Английский
+    en: English
+defaultSeo:
+  title:
+    ru: Archvino | Архитектурное портфолио
+    en: Archvino | Architecture Portfolio
+  description:
+    ru: Билингвальное портфолио архитектора с частными и общественными проектами.
+    en: Bilingual architect portfolio with residential and public projects.
+contact:
+  email: hello@archvino.ru
+  phone: +7 999 000 00 00
+  address:
+    ru: Москва, Россия
+    en: Moscow, Russia
+  mapUrl: https://maps.example.com/archvino
+socialLinks:
+  - label:
+      ru: Телеграм
+      en: Telegram
+    url: https://t.me/archvino
+  - label:
+      ru: Инстаграм
+      en: Instagram
+    url: https://instagram.com/archvino

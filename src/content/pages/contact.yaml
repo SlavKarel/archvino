@@ -1,0 +1,20 @@
+id: contact
+heading:
+  ru: Контакт
+  en: Contact
+intro:
+  ru: Напишите нам о проекте, сроках и контексте, чтобы мы могли подготовить осмысленный первый ответ.
+  en: Write to us about the project, timeline, and context so we can prepare a thoughtful first reply.
+formLabels:
+  name:
+    ru: Имя
+    en: Name
+  email:
+    ru: Электронная почта
+    en: Email
+  message:
+    ru: Сообщение
+    en: Message
+  submit:
+    ru: Отправить
+    en: Send

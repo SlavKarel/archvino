@@ -1,0 +1,18 @@
+id: about
+title:
+  ru: О студии
+  en: About the studio
+biography:
+  ru: Archvino ведет частные и общественные проекты от первой идеи до авторского сопровождения реализации.
+  en: Archvino leads private and public projects from the first concept through construction supervision.
+approach:
+  ru: Мы ищем спокойные пространственные решения, где планировка, свет и фактура работают вместе и не спорят с образом жизни заказчика.
+  en: We look for calm spatial solutions where planning, light, and texture work together without competing with the client's way of living.
+credentials:
+  ru: Практика базируется в Москве и работает с жилыми домами, интерьерами и небольшими культурными объектами.
+  en: The practice is based in Moscow and works on residential homes, interiors, and small cultural spaces.
+portrait:
+  src: /src/assets/about/portrait.jpg
+  alt:
+    ru: Портрет архитектора в студии
+    en: Portrait of the architect in the studio

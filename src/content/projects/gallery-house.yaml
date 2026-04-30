@@ -1,0 +1,54 @@
+slug: gallery-house
+category: cultural
+year: 2023
+location:
+  ru: Казань
+  en: Kazan
+status:
+  ru: Завершен
+  en: Completed
+featured: true
+order: 2
+title:
+  ru: Галерейный дом
+  en: Gallery House
+summary:
+  ru: Небольшой культурный объект с гибким маршрутом, камерными залами и ясной материальной палитрой.
+  en: A compact cultural venue with a flexible route, intimate rooms, and a clear material palette.
+cover:
+  src: /src/assets/projects/gallery-house/cover.jpg
+  alt:
+    ru: Светлый фасад галерейного дома
+    en: Bright facade of the gallery house
+gallery:
+  - src: /src/assets/projects/gallery-house/gallery-1.jpg
+    alt:
+      ru: Входная зона галереи
+      en: Gallery entrance area
+  - src: /src/assets/projects/gallery-house/gallery-2.jpg
+    alt:
+      ru: Выставочный зал с верхним светом
+      en: Exhibition room with top lighting
+  - src: /src/assets/projects/gallery-house/gallery-3.jpg
+    alt:
+      ru: Лестница и переход между залами
+      en: Stair and passage between rooms
+sections:
+  - label:
+      ru: Идея
+      en: Idea
+    heading:
+      ru: Дом работает как последовательность тихих сцен.
+      en: The building works as a sequence of quiet scenes.
+    body:
+      ru: Маршрут выстроен так, чтобы чередовать открытые и камерные пространства без резких смен масштаба.
+      en: The route alternates open and intimate spaces without abrupt changes in scale.
+  - label:
+      ru: Материалы
+      en: Materials
+    heading:
+      ru: Палитра сведена к светлой штукатурке, дубу и бетону.
+      en: The palette is reduced to pale plaster, oak, and concrete.
+    body:
+      ru: Сдержанная палитра позволяет искусству оставаться главным визуальным акцентом интерьера.
+      en: The restrained palette allows the art to remain the main visual focus inside.
