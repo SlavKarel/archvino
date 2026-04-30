@@ -1,4 +1,30 @@
+html[data-motion='allow'] .project-grid__item {
+  transition: opacity var(--duration-base) var(--ease-base),
+    transform var(--duration-base) var(--ease-base);
+}
+
+html[data-motion='allow'] .project-grid__item[data-filter-state='revealing'] {
+  opacity: 0.72;
+  transform: translateY(0.2rem);
+}
+
+html[data-motion='allow'] .project-grid__item[data-filter-state='visible'] {
+  opacity: 1;
+  transform: none;
+}
+
+html[data-motion='reduce'] .project-grid__item {
+  transition: none !important;
+  transform: none !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .project-grid__item {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+
   *,
   *::before,
   *::after {

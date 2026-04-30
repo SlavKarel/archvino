@@ -43,6 +43,7 @@ const featuredProjects = home.featuredProjectSlugs
   .filter((project) => project !== undefined)
   .map((project) => ({
     slug: project.slug,
+    categorySlug: project.category,
     title: project.title,
     category: categoryLabels.get(project.category) ?? project.category,
     year: project.year,
@@ -77,6 +78,9 @@ function resolveProjectCover(slug: string): string {
       kicker={locale === 'ru' ? 'Избранное' : 'Selected work'}
       title={locale === 'ru' ? 'Избранные проекты' : 'Featured projects'}
       projects={featuredProjects}
+      categories={categories}
+      filtersLabel={locale === 'ru' ? 'Фильтр проектов' : 'Filter projects'}
+      allLabel={locale === 'ru' ? 'Все' : 'All'}
     />
 
     <section class="home-preview-grid">
@@ -103,6 +107,14 @@ function resolveProjectCover(slug: string): string {
     />
   </div>
 </PageLayout>
+
+<script>
+  import initMotion from '../../scripts/motion';
+  import initProjectFilters from '../../scripts/project-filters';
+
+  initMotion();
+  initProjectFilters();
+</script>
 
 <style>
   .home-flow {

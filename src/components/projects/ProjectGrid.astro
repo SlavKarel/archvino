@@ -1,8 +1,10 @@
 ---
+import ProjectFilters from './ProjectFilters.astro';
 import ProjectCard from './ProjectCard.astro';
 
 type Project = {
   slug: string;
+  categorySlug: string;
   title: string;
   category: string;
   year: number;
@@ -12,31 +14,47 @@ type Project = {
   href: string;
 };
 
+type Category = {
+  slug: string;
+  label: string;
+};
+
 type Props = {
   title: string;
   kicker: string;
   projects: Project[];
+  categories: Category[];
+  filtersLabel: string;
+  allLabel: string;
 };
 
-const { title, kicker, projects } = Astro.props;
+const { title, kicker, projects, categories, filtersLabel, allLabel } = Astro.props;
 ---
 
-<section class="project-grid-section">
+<section class="project-grid-section" data-project-grid-section>
   <div class="project-grid-section__header">
     <p class="project-grid-section__kicker">{kicker}</p>
     <h2>{title}</h2>
   </div>
+  <ProjectFilters label={filtersLabel} allLabel={allLabel} categories={categories} />
   <div class="project-grid">
     {projects.map((project) => (
-      <ProjectCard
-        href={project.href}
-        title={project.title}
-        category={project.category}
-        year={project.year}
-        summary={project.summary}
-        coverSrc={project.coverSrc}
-        coverAlt={project.coverAlt}
-      />
+      <div
+        class="project-grid__item"
+        data-project-item
+        data-project-category={project.categorySlug}
+        data-filter-state="visible"
+      >
+        <ProjectCard
+          href={project.href}
+          title={project.title}
+          category={project.category}
+          year={project.year}
+          summary={project.summary}
+          coverSrc={project.coverSrc}
+          coverAlt={project.coverAlt}
+        />
+      </div>
     ))}
   </div>
 </section>

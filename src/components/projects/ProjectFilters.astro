@@ -1,0 +1,35 @@
+---
+type Category = {
+  slug: string;
+  label: string;
+};
+
+type Props = {
+  label: string;
+  allLabel: string;
+  categories: Category[];
+};
+
+const { label, allLabel, categories } = Astro.props;
+---
+
+<div class="project-filters" data-project-filters role="toolbar" aria-label={label}>
+  <button
+    class="project-filters__button"
+    type="button"
+    data-project-filter="all"
+    aria-pressed="true"
+  >
+    {allLabel}
+  </button>
+  {categories.map((category) => (
+  <button
+    class="project-filters__button"
+    type="button"
+    data-project-filter={category.slug}
+    aria-pressed="false"
+  >
+    {category.label}
+  </button>
+  ))}
+</div>
