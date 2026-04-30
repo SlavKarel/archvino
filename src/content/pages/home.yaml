@@ -5,6 +5,12 @@ headline:
 intro:
   ru: Проектируем дома, интерьеры и общественные пространства с вниманием к свету, ритму и материалу.
   en: We design homes, interiors, and public spaces with attention to light, rhythm, and material.
+aboutPreview:
+  ru: Частная практика Archvino ведет проекты от первой идеи до авторского сопровождения реализации.
+  en: Archvino is a private practice guiding projects from the first concept through construction supervision.
+servicesPreview:
+  ru: Архитектурная концепция, интерьер и сопровождение реализации собираются в один спокойный рабочий процесс.
+  en: Architectural concept, interiors, and delivery support are shaped into one calm working process.
 featuredProjectSlugs:
   - villa-moscow
   - gallery-house

@@ -1,7 +1,14 @@
 ---
 import PageLayout from '../../layouts/PageLayout.astro';
+import AboutPreview from '../../components/sections/AboutPreview.astro';
+import ContactCta from '../../components/sections/ContactCta.astro';
+import HomeIntro from '../../components/sections/HomeIntro.astro';
+import ProjectGrid from '../../components/projects/ProjectGrid.astro';
+import ServicesPreview from '../../components/sections/ServicesPreview.astro';
 import { getHomePageContent, getSiteSettings } from '../../lib/content';
 import { LOCALES, isLocale, type Locale } from '../../lib/i18n';
+import { getProjectCategories, getProjects } from '../../lib/projects';
+import { buildPagePath, buildProjectPath } from '../../lib/routes';
 import { buildDefaultSeo } from '../../lib/seo';
 
 export function getStaticPaths() {
@@ -16,11 +23,44 @@ if (!localeParam || !isLocale(localeParam)) {
 
 const locale: Locale = localeParam;
 
-const [settings, home, seo] = await Promise.all([
+const projectCoverModules = import.meta.glob('../../assets/projects/*/cover.jpg', {
+  eager: true,
+  import: 'default',
+});
+
+const [settings, home, seo, projects, categories] = await Promise.all([
   getSiteSettings(),
   getHomePageContent(locale),
   buildDefaultSeo(locale),
+  getProjects(locale),
+  getProjectCategories(locale),
 ]);
+
+const categoryLabels = new Map(categories.map((category) => [category.slug, category.label]));
+
+const featuredProjects = home.featuredProjectSlugs
+  .map((slug) => projects.find((project) => project.slug === slug))
+  .filter((project) => project !== undefined)
+  .map((project) => ({
+    slug: project.slug,
+    title: project.title,
+    category: categoryLabels.get(project.category) ?? project.category,
+    year: project.year,
+    summary: project.summary,
+    coverAlt: project.cover.alt,
+    coverSrc: resolveProjectCover(project.slug),
+    href: buildProjectPath(locale, project.slug),
+  }));
+
+function resolveProjectCover(slug: string): string {
+  const entry = Object.entries(projectCoverModules).find(([path]) => path.endsWith(`/${slug}/cover.jpg`));
+
+  if (!entry) {
+    return '';
+  }
+
+  return String(entry[1]);
+}
 ---
 
 <PageLayout
@@ -30,8 +70,55 @@ const [settings, home, seo] = await Promise.all([
   title={seo.title}
   description={seo.description}
 >
-  <section class="page-intro">
-    <h1>{home.headline}</h1>
-    <p>{home.intro}</p>
-  </section>
+  <div class="home-flow">
+    <HomeIntro headline={home.headline} intro={home.intro} />
+
+    <ProjectGrid
+      kicker={locale === 'ru' ? 'Избранное' : 'Selected work'}
+      title={locale === 'ru' ? 'Избранные проекты' : 'Featured projects'}
+      projects={featuredProjects}
+    />
+
+    <section class="home-preview-grid">
+      <ServicesPreview
+        title={locale === 'ru' ? 'Услуги' : 'Services'}
+        body={home.servicesPreview}
+        href={buildPagePath(locale, 'services')}
+        linkLabel={locale === 'ru' ? 'Подробнее' : 'Learn more'}
+      />
+      <AboutPreview
+        title={locale === 'ru' ? 'О студии' : 'About'}
+        body={home.aboutPreview}
+        href={buildPagePath(locale, 'about')}
+        linkLabel={locale === 'ru' ? 'Открыть' : 'Open'}
+      />
+    </section>
+
+    <ContactCta
+      kicker={locale === 'ru' ? 'Контакты' : 'Contact'}
+      heading={home.contactCta.heading}
+      body={home.contactCta.body}
+      href={buildPagePath(locale, 'contact')}
+      label={home.contactCta.label}
+    />
+  </div>
 </PageLayout>
+
+<style>
+  .home-flow {
+    display: grid;
+    gap: var(--space-7);
+  }
+
+  .home-preview-grid {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (max-width: 48rem) {
+    .home-preview-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

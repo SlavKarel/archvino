@@ -1,0 +1,45 @@
+---
+type Props = {
+  title: string;
+  body: string;
+  href: string;
+  linkLabel: string;
+};
+
+const { title, body, href, linkLabel } = Astro.props;
+---
+
+<section class="preview-card">
+  <p class="preview-card__kicker">{title}</p>
+  <p class="preview-card__body">{body}</p>
+  <a class="preview-card__link" href={href}>{linkLabel}</a>
+</section>
+
+<style>
+  .preview-card {
+    display: grid;
+    gap: var(--space-3);
+    padding: var(--space-5);
+    border: 1px solid var(--color-line);
+    border-radius: var(--radius-card);
+    background: color-mix(in srgb, var(--color-surface) 88%, white);
+  }
+
+  .preview-card__kicker {
+    color: var(--color-text);
+    font-size: 0.82rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .preview-card__body {
+    line-height: 1.7;
+  }
+
+  .preview-card__link {
+    width: fit-content;
+    padding-bottom: 0.2rem;
+    border-bottom: 1px solid var(--color-line);
+    color: var(--color-text);
+  }
+  </style>
