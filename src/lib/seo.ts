@@ -7,6 +7,15 @@ type SeoInput = {
   image?: string;
 };
 
+type ProjectSeoInput = {
+  title: string;
+  summary: string;
+  location: string;
+  year: number;
+  status: string;
+  image?: string;
+};
+
 export async function buildDefaultSeo(locale: Locale) {
   const [settings, defaults] = await Promise.all([getSiteSettings(), getDefaultSeo(locale)]);
 
@@ -25,6 +34,18 @@ export async function buildSeo(locale: Locale, input: SeoInput = {}) {
     description: input.description || defaults.description,
     image: input.image || defaults.image,
   };
+}
+
+export async function buildProjectSeo(locale: Locale, input: ProjectSeoInput) {
+  const defaults = await buildDefaultSeo(locale);
+  const title = `${input.title} | ${defaults.title}`;
+  const details = `${input.location}, ${input.year}. ${input.status}.`;
+
+  return buildSeo(locale, {
+    title,
+    description: `${input.summary} ${details}`,
+    image: input.image,
+  });
 }
 
 export function localizeSeoField(value: LocalizedString, locale: Locale): string {

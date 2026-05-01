@@ -2,6 +2,11 @@ import { getCollection } from 'astro:content';
 
 import { type Locale, getLocalizedValue, type LocalizedString } from './i18n';
 
+const projectAssetModules = import.meta.glob('../assets/projects/**/*.{jpg,jpeg,png,webp,avif}', {
+  eager: true,
+  import: 'default',
+});
+
 type ImageReference = {
   src: string;
   alt: LocalizedString;
@@ -93,6 +98,12 @@ export async function getProjects(locale: Locale): Promise<LocalizedProject[]> {
   return sortProjects(entries.map((entry) => localizeProject(entry.data as ProjectData, locale)));
 }
 
+export async function getProjectSlugs(): Promise<string[]> {
+  const entries = await getCollection('projects');
+
+  return entries.map((entry) => (entry.data as ProjectData).slug);
+}
+
 export async function getProjectBySlug(slug: string, locale: Locale): Promise<LocalizedProject | undefined> {
   const entries = await getCollection('projects');
   const entry = entries.find((item) => item.data.slug === slug);
@@ -130,11 +141,11 @@ function localizeProject(project: ProjectData, locale: Locale): LocalizedProject
     title: getLocalizedValue(project.title, locale),
     summary: getLocalizedValue(project.summary, locale),
     cover: {
-      src: project.cover.src,
+      src: resolveProjectAssetPath(project.cover.src),
       alt: getLocalizedValue(project.cover.alt, locale),
     },
     gallery: project.gallery.map((image) => ({
-      src: image.src,
+      src: resolveProjectAssetPath(image.src),
       alt: getLocalizedValue(image.alt, locale),
     })),
     sections: project.sections.map((section) => ({
@@ -143,6 +154,17 @@ function localizeProject(project: ProjectData, locale: Locale): LocalizedProject
       body: getLocalizedValue(section.body, locale),
     })),
   };
+}
+
+function resolveProjectAssetPath(source: string): string {
+  const moduleKey = source.startsWith('/src/') ? `../${source.slice('/src/'.length)}` : source;
+  const asset = projectAssetModules[moduleKey];
+
+  if (!asset) {
+    return source;
+  }
+
+  return String(asset);
 }
 
 export type { LocalizedProject, ProjectData, TaxonomyData };

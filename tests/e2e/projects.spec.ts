@@ -21,3 +21,13 @@ test('project filters still work with reduced motion enabled', async ({ page }) 
   await expect(page).toHaveURL(/\/ru\/?$/);
   await expect(page.locator('[data-project-card]:visible')).toHaveCount(1);
 });
+
+test('project detail page renders hero, facts, gallery, and sections', async ({ page }) => {
+  await page.goto('/ru/projects/villa-moscow');
+
+  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await expect(page.locator('[data-project-summary]')).toBeVisible();
+  await expect(page.locator('[data-project-facts]')).toBeVisible();
+  await expect(page.locator('[data-project-gallery] img')).toHaveCount(3);
+  await expect(page.locator('[data-project-section]')).toHaveCount(2);
+});

@@ -1,0 +1,72 @@
+---
+type Section = {
+  label: string;
+  heading: string;
+  body: string;
+};
+
+type Props = {
+  sections: Section[];
+};
+
+const { sections } = Astro.props;
+---
+
+<section class="project-sections">
+  {
+    sections.map((section) => (
+      <article class="project-section" data-project-section>
+        <p class="project-section__label">{section.label}</p>
+        <div class="project-section__body">
+          <h2>{section.heading}</h2>
+          <p>{section.body}</p>
+        </div>
+      </article>
+    ))
+  }
+</section>
+
+<style>
+  .project-sections {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .project-section {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: minmax(0, 10rem) minmax(0, 1fr);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .project-section__label {
+    color: var(--color-muted);
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .project-section__body {
+    display: grid;
+    gap: var(--space-2);
+    max-width: 38rem;
+  }
+
+  .project-section h2 {
+    margin: 0;
+    font-size: clamp(1.25rem, 2.2vw, 1.7rem);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+  }
+
+  .project-section p {
+    line-height: 1.7;
+  }
+
+  @media (max-width: 48rem) {
+    .project-section {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,61 @@
+---
+type Fact = {
+  label: string;
+  value: string | number;
+};
+
+type Props = {
+  facts: Fact[];
+};
+
+const { facts } = Astro.props;
+
+const visibleFacts = facts.filter((fact) => String(fact.value).trim() !== '');
+---
+
+<dl class="project-facts" data-project-facts>
+  {
+    visibleFacts.map((fact) => (
+      <div class="project-facts__item">
+        <dt>{fact.label}</dt>
+        <dd>{fact.value}</dd>
+      </div>
+    ))
+  }
+</dl>
+
+<style>
+  .project-facts {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    padding: 0;
+    margin: 0;
+  }
+
+  .project-facts__item {
+    display: grid;
+    gap: var(--space-1);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .project-facts dt {
+    color: var(--color-muted);
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .project-facts dd {
+    margin: 0;
+    color: var(--color-text);
+    font-size: 1rem;
+  }
+
+  @media (max-width: 48rem) {
+    .project-facts {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

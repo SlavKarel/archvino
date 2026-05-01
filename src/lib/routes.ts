@@ -1,4 +1,4 @@
-import { type Locale, buildLocalePath, isLocale } from './i18n';
+import { LOCALES, type Locale, buildLocalePath, isLocale } from './i18n';
 
 export function buildHomePath(locale: Locale): string {
   return buildLocalePath(locale, '/');
@@ -10,6 +10,17 @@ export function buildPagePath(locale: Locale, pageSlug: string): string {
 
 export function buildProjectPath(locale: Locale, projectSlug: string): string {
   return buildLocalePath(locale, `/projects/${projectSlug}`);
+}
+
+export function buildProjectStaticPaths(projectSlugs: string[]) {
+  return LOCALES.flatMap((locale) =>
+    projectSlugs.map((slug) => ({
+      params: {
+        locale,
+        slug,
+      },
+    })),
+  );
 }
 
 export function buildLocaleSwitchPath(currentPath: string, targetLocale: Locale): string {

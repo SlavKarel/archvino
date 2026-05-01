@@ -1,0 +1,136 @@
+---
+import type { SiteSettings } from '../lib/content';
+import type { Locale } from '../lib/i18n';
+import { getLocalizedValue } from '../lib/i18n';
+import BaseLayout from './BaseLayout.astro';
+import Footer from '../components/site/Footer.astro';
+import Header from '../components/site/Header.astro';
+
+type Props = {
+  locale: Locale;
+  pathname: string;
+  settings: SiteSettings;
+  title: string;
+  description: string;
+  eyebrow: string;
+  heading: string;
+  summary: string;
+  heroSrc: string;
+  heroAlt: string;
+};
+
+const { locale, pathname, settings, title, description, eyebrow, heading, summary, heroSrc, heroAlt } = Astro.props;
+
+const navigation = {
+  home: getLocalizedValue(settings.navigation.home, locale),
+  projects: getLocalizedValue(settings.navigation.projects, locale),
+  about: getLocalizedValue(settings.navigation.about, locale),
+  services: getLocalizedValue(settings.navigation.services, locale),
+  contact: getLocalizedValue(settings.navigation.contact, locale),
+};
+
+const localeLabels = {
+  ru: getLocalizedValue(settings.localeLabels.ru, locale),
+  en: getLocalizedValue(settings.localeLabels.en, locale),
+};
+
+const footerText = getLocalizedValue(settings.footerText, locale);
+---
+
+<BaseLayout locale={locale} title={title} description={description}>
+  <div class="site-frame">
+    <Header
+      locale={locale}
+      pathname={pathname}
+      studioName={settings.studioName}
+      navigation={navigation}
+      localeLabels={localeLabels}
+    />
+
+    <main class="project-layout">
+      <section class="project-hero shell">
+        <div class="project-hero__intro">
+          <p class="project-hero__eyebrow">{eyebrow}</p>
+          <div class="project-hero__copy">
+            <h1>{heading}</h1>
+            <p data-project-summary>{summary}</p>
+          </div>
+        </div>
+
+        <img class="project-hero__image" src={heroSrc} alt={heroAlt} loading="eager" />
+      </section>
+
+      <div class="shell project-layout__body">
+        <slot />
+      </div>
+    </main>
+
+    <Footer text={footerText} />
+  </div>
+</BaseLayout>
+
+<style>
+  .project-layout {
+    display: grid;
+    gap: var(--space-6);
+    padding-block: var(--space-5) var(--space-7);
+  }
+
+  .project-hero {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .project-hero__intro {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .project-hero__eyebrow {
+    color: var(--color-muted);
+    font-size: 0.82rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .project-hero__copy {
+    display: grid;
+    gap: var(--space-3);
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 0.8fr);
+    align-items: end;
+  }
+
+  .project-hero__copy p {
+    max-width: 30rem;
+    line-height: 1.7;
+  }
+
+  .project-hero__image {
+    aspect-ratio: 16 / 10;
+    width: 100%;
+    border-radius: calc(var(--radius-card) * 1.25);
+    object-fit: cover;
+    background: rgba(32, 32, 27, 0.08);
+  }
+
+  .project-layout__body {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  @media (max-width: 48rem) {
+    .project-layout {
+      gap: var(--space-5);
+      padding-block: var(--space-4) var(--space-6);
+    }
+
+    .project-hero__copy {
+      grid-template-columns: 1fr;
+    }
+
+    .project-hero__image {
+      aspect-ratio: 4 / 5;
+      border-radius: var(--radius-card);
+    }
+  }
+</style>
