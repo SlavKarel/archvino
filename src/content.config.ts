@@ -90,6 +90,17 @@ const pages = defineCollection({
       id: z.literal('contact'),
       heading: localizedStringSchema,
       intro: localizedStringSchema,
+      email: z.string(),
+      phone: z.string(),
+      address: localizedStringSchema,
+      mapUrl: z.string().url(),
+      socialLinks: z.array(
+        z.object({
+          label: localizedStringSchema,
+          url: z.string().url(),
+        }),
+      ),
+      formHelper: localizedStringSchema,
       formLabels: z.object({
         name: localizedStringSchema,
         email: localizedStringSchema,

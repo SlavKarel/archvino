@@ -1,0 +1,136 @@
+---
+import { getCollection } from 'astro:content';
+
+import PageLayout from '../../layouts/PageLayout.astro';
+import { getSiteSettings, type AboutPage } from '../../lib/content';
+import { getLocalizedValue, isLocale, LOCALES, type Locale } from '../../lib/i18n';
+import { buildSeo } from '../../lib/seo';
+
+const portraitModules = import.meta.glob('../../assets/about/*.{jpg,jpeg,png,webp,avif}', {
+  eager: true,
+  import: 'default',
+});
+
+export function getStaticPaths() {
+  return LOCALES.map((locale) => ({ params: { locale } }));
+}
+
+const { locale: localeParam } = Astro.params;
+
+if (!localeParam || !isLocale(localeParam)) {
+  return Astro.redirect('/ru/');
+}
+
+const locale: Locale = localeParam;
+const settings = await getSiteSettings();
+const pages = await getCollection('pages');
+const entry = pages.find((item) => item.id === 'about');
+
+if (!entry) {
+  throw new Error('missing about page content');
+}
+
+const about = entry.data as AboutPage;
+const title = getLocalizedValue(about.title, locale);
+const portraitSrc = resolvePortraitAsset(about.portrait.src);
+const seo = await buildSeo(locale, {
+  title: `${title} | ${settings.studioName}`,
+  description: getLocalizedValue(about.biography, locale),
+  image: portraitSrc,
+});
+
+function resolvePortraitAsset(source: string): string {
+  const moduleKey = source.startsWith('/src/') ? `../../${source.slice('/src/'.length)}` : source;
+  const asset = portraitModules[moduleKey];
+
+  if (!asset) {
+    return source;
+  }
+
+  return String(asset);
+}
+---
+
+<PageLayout
+  locale={locale}
+  pathname={Astro.url.pathname}
+  settings={settings}
+  title={seo.title}
+  description={seo.description}
+>
+  <section class="about-page">
+    <div class="about-page__intro page-intro">
+      <h1>{title}</h1>
+      <p>{getLocalizedValue(about.biography, locale)}</p>
+    </div>
+
+    <div class="about-page__body">
+      <figure class="about-page__portrait">
+        <img src={portraitSrc} alt={getLocalizedValue(about.portrait.alt, locale)} loading="eager" />
+      </figure>
+
+      <div class="about-page__text">
+        <section>
+          <h2>{locale === 'ru' ? 'Подход' : 'Approach'}</h2>
+          <p>{getLocalizedValue(about.approach, locale)}</p>
+        </section>
+
+        <section>
+          <h2>{locale === 'ru' ? 'Практика' : 'Credentials'}</h2>
+          <p>{getLocalizedValue(about.credentials, locale)}</p>
+        </section>
+      </div>
+    </div>
+  </section>
+</PageLayout>
+
+<style>
+  .about-page {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .about-page__body {
+    display: grid;
+    gap: var(--space-5);
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    align-items: start;
+  }
+
+  .about-page__portrait {
+    margin: 0;
+    background: var(--color-surface);
+  }
+
+  .about-page__portrait img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+
+  .about-page__text {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  .about-page__text section {
+    display: grid;
+    gap: var(--space-3);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .about-page__text h2 {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 56rem) {
+    .about-page__body {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -1,0 +1,88 @@
+---
+import type { Locale } from '../../lib/i18n';
+
+type Props = {
+  locale: Locale;
+  email: string;
+  phone: string;
+  address: string;
+  mapUrl: string;
+  socialLinks: Array<{
+    label: string;
+    url: string;
+  }>;
+};
+
+const { locale, email, phone, address, mapUrl, socialLinks } = Astro.props;
+
+const labels = {
+  email: locale === 'ru' ? 'Почта' : 'Email',
+  phone: locale === 'ru' ? 'Телефон' : 'Phone',
+  address: locale === 'ru' ? 'Город' : 'Location',
+  social: locale === 'ru' ? 'Соцсети' : 'Social',
+};
+---
+
+<div class="contact-links">
+  <div class="contact-links__item">
+    <span>{labels.email}</span>
+    <a href={`mailto:${email}`}>{email}</a>
+  </div>
+  <div class="contact-links__item">
+    <span>{labels.phone}</span>
+    <a href={`tel:${phone.replace(/\s+/g, '')}`}>{phone}</a>
+  </div>
+  <div class="contact-links__item">
+    <span>{labels.address}</span>
+    <a href={mapUrl} target="_blank" rel="noreferrer">{address}</a>
+  </div>
+  <div class="contact-links__item">
+    <span>{labels.social}</span>
+    <ul>
+      {socialLinks.map((link) => (
+        <li>
+          <a href={link.url} target="_blank" rel="noreferrer">{link.label}</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>
+
+<style>
+  .contact-links {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .contact-links__item {
+    display: grid;
+    gap: var(--space-2);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .contact-links__item span {
+    color: var(--color-muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .contact-links__item a {
+    width: fit-content;
+  }
+
+  .contact-links__item a:hover,
+  .contact-links__item a:focus-visible {
+    color: var(--color-muted);
+  }
+
+  .contact-links__item ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+</style>

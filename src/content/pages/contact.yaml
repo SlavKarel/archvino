@@ -3,8 +3,26 @@ heading:
   ru: Контакт
   en: Contact
 intro:
-  ru: Напишите нам о проекте, сроках и контексте, чтобы мы могли подготовить осмысленный первый ответ.
-  en: Write to us about the project, timeline, and context so we can prepare a thoughtful first reply.
+  ru: Свяжитесь с нами удобным способом или оставьте короткое сообщение о проекте, сроках и контексте.
+  en: Reach out directly or leave a short note about the project, timing, and context.
+email: hello@archvino.ru
+phone: +7 999 000 00 00
+address:
+  ru: Москва, Россия
+  en: Moscow, Russia
+mapUrl: https://maps.example.com/archvino
+socialLinks:
+  - label:
+      ru: Телеграм
+      en: Telegram
+    url: https://t.me/archvino
+  - label:
+      ru: Инстаграм
+      en: Instagram
+    url: https://instagram.com/archvino
+formHelper:
+  ru: Достаточно нескольких предложений, чтобы мы подготовили содержательный первый ответ.
+  en: A few clear sentences are enough for us to prepare a useful first response.
 formLabels:
   name:
     ru: Имя

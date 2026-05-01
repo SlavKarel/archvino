@@ -1,0 +1,108 @@
+---
+import { getCollection } from 'astro:content';
+
+import PageLayout from '../../layouts/PageLayout.astro';
+import { getSiteSettings, type ServicesPage } from '../../lib/content';
+import { getLocalizedValue, isLocale, LOCALES, type Locale } from '../../lib/i18n';
+import { buildSeo } from '../../lib/seo';
+import { buildPagePath } from '../../lib/routes';
+
+export function getStaticPaths() {
+  return LOCALES.map((locale) => ({ params: { locale } }));
+}
+
+const { locale: localeParam } = Astro.params;
+
+if (!localeParam || !isLocale(localeParam)) {
+  return Astro.redirect('/ru/');
+}
+
+const locale: Locale = localeParam;
+const settings = await getSiteSettings();
+const pages = await getCollection('pages');
+const entry = pages.find((item) => item.id === 'services');
+
+if (!entry) {
+  throw new Error('missing services page content');
+}
+
+const services = entry.data as ServicesPage;
+const title = getLocalizedValue(services.title, locale);
+const seo = await buildSeo(locale, {
+  title: `${title} | ${settings.studioName}`,
+  description: getLocalizedValue(services.intro, locale),
+});
+
+const items = services.items.map((item) => getLocalizedValue(item, locale));
+---
+
+<PageLayout
+  locale={locale}
+  pathname={Astro.url.pathname}
+  settings={settings}
+  title={seo.title}
+  description={seo.description}
+>
+  <section class="services-page">
+    <div class="services-page__intro page-intro">
+      <h1>{title}</h1>
+      <p>{getLocalizedValue(services.intro, locale)}</p>
+    </div>
+
+    <ol class="services-page__list">
+      {items.map((item) => (
+        <li>{item}</li>
+      ))}
+    </ol>
+
+    <p class="services-page__cta">
+      {getLocalizedValue(services.cta, locale)}
+      <a href={buildPagePath(locale, 'contact')}>{locale === 'ru' ? ' Написать.' : ' Get in touch.'}</a>
+    </p>
+  </section>
+</PageLayout>
+
+<style>
+  .services-page {
+    display: grid;
+    gap: var(--space-5);
+    max-width: 48rem;
+  }
+
+  .services-page__list {
+    display: grid;
+    gap: var(--space-3);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    counter-reset: services;
+  }
+
+  .services-page__list li {
+    display: grid;
+    gap: var(--space-2);
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--color-line);
+  }
+
+  .services-page__list li::before {
+    counter-increment: services;
+    content: '0' counter(services);
+    color: var(--color-muted);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+  }
+
+  .services-page__cta {
+    max-width: 34rem;
+  }
+
+  .services-page__cta a {
+    color: var(--color-text);
+  }
+
+  .services-page__cta a:hover,
+  .services-page__cta a:focus-visible {
+    color: var(--color-muted);
+  }
+</style>

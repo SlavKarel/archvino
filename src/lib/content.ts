@@ -64,6 +64,15 @@ type ContactPage = {
   id: 'contact';
   heading: LocalizedString;
   intro: LocalizedString;
+  email: string;
+  phone: string;
+  address: LocalizedString;
+  mapUrl: string;
+  socialLinks: Array<{
+    label: LocalizedString;
+    url: string;
+  }>;
+  formHelper: LocalizedString;
   formLabels: Record<'name' | 'email' | 'message' | 'submit', LocalizedString>;
 };
 
