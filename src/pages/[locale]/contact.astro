@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 
+import ContactForm from '../../components/contact/ContactForm.astro';
 import ContactLinks from '../../components/site/ContactLinks.astro';
 import PageLayout from '../../layouts/PageLayout.astro';
 import { getSiteSettings, type ContactPage } from '../../lib/content';
@@ -29,6 +30,7 @@ if (!entry) {
 const contact = entry.data as ContactPage;
 const title = getLocalizedValue(contact.heading, locale);
 const formHelper = contact.formHelper ? getLocalizedValue(contact.formHelper, locale) : getLocalizedValue(contact.intro, locale);
+const contactEndpoint = import.meta.env.PUBLIC_CONTACT_FORM_ENDPOINT || '';
 const seo = await buildSeo(locale, {
   title: `${title} | ${settings.studioName}`,
   description: getLocalizedValue(contact.intro, locale),
@@ -63,28 +65,25 @@ const socialLinks = contact.socialLinks.map((link) => ({
         socialLinks={socialLinks}
       />
 
-      <section class="contact-page__form-block" aria-label={locale === 'ru' ? 'Форма контакта' : 'Contact form'}>
-        <p>{formHelper}</p>
-
-        <form class="contact-form">
-          <label>
-            <span>{getLocalizedValue(contact.formLabels.name, locale)}</span>
-            <input type="text" name="name" autocomplete="name" />
-          </label>
-
-          <label>
-            <span>{getLocalizedValue(contact.formLabels.email, locale)}</span>
-            <input type="email" name="email" autocomplete="email" />
-          </label>
-
-          <label>
-            <span>{getLocalizedValue(contact.formLabels.message, locale)}</span>
-            <textarea name="message" rows={6}></textarea>
-          </label>
-
-          <button type="submit">{getLocalizedValue(contact.formLabels.submit, locale)}</button>
-        </form>
-      </section>
+      <ContactForm
+        action={contactEndpoint}
+        helper={formHelper}
+        labels={{
+          name: getLocalizedValue(contact.formLabels.name, locale),
+          email: getLocalizedValue(contact.formLabels.email, locale),
+          message: getLocalizedValue(contact.formLabels.message, locale),
+          submit: getLocalizedValue(contact.formLabels.submit, locale),
+        }}
+        validation={{
+          required: getLocalizedValue(contact.formMessages.required, locale),
+          invalidEmail: getLocalizedValue(contact.formMessages.invalidEmail, locale),
+        }}
+        feedback={{
+          success: getLocalizedValue(contact.formMessages.success, locale),
+          error: getLocalizedValue(contact.formMessages.error, locale),
+          sending: getLocalizedValue(contact.formMessages.sending, locale),
+        }}
+      />
     </div>
   </section>
 </PageLayout>
@@ -100,63 +99,6 @@ const socialLinks = contact.socialLinks.map((link) => ({
     gap: var(--space-5);
     grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
     align-items: start;
-  }
-
-  .contact-page__form-block {
-    display: grid;
-    gap: var(--space-4);
-    padding: var(--space-4);
-    border: 1px solid var(--color-line);
-    background: color-mix(in srgb, var(--color-surface) 65%, transparent);
-  }
-
-  .contact-form {
-    display: grid;
-    gap: var(--space-3);
-  }
-
-  .contact-form label {
-    display: grid;
-    gap: var(--space-2);
-  }
-
-  .contact-form span {
-    color: var(--color-muted);
-    font-size: 0.9rem;
-  }
-
-  .contact-form input,
-  .contact-form textarea,
-  .contact-form button {
-    width: 100%;
-    border: 1px solid var(--color-line);
-    border-radius: 0;
-    background: transparent;
-    color: var(--color-text);
-    font: inherit;
-  }
-
-  .contact-form input,
-  .contact-form textarea {
-    padding: 0.9rem 1rem;
-  }
-
-  .contact-form textarea {
-    resize: vertical;
-  }
-
-  .contact-form button {
-    width: fit-content;
-    padding: 0.9rem 1.25rem;
-    cursor: pointer;
-    transition: color var(--duration-base) var(--ease-base),
-      border-color var(--duration-base) var(--ease-base);
-  }
-
-  .contact-form button:hover,
-  .contact-form button:focus-visible {
-    color: var(--color-muted);
-    border-color: color-mix(in srgb, var(--color-text) 20%, var(--color-line));
   }
 
   @media (max-width: 56rem) {

@@ -1,0 +1,264 @@
+---
+type Props = {
+  action: string;
+  helper: string;
+  labels: {
+    name: string;
+    email: string;
+    message: string;
+    submit: string;
+  };
+  validation: {
+    required: string;
+    invalidEmail: string;
+  };
+  feedback: {
+    success: string;
+    error: string;
+    sending: string;
+  };
+};
+
+const { action, helper, labels, validation, feedback } = Astro.props;
+---
+
+<section class="contact-form-block" aria-label={labels.submit}>
+  <p>{helper}</p>
+
+  <form
+    class="contact-form"
+    action={action || undefined}
+    method="post"
+    novalidate
+    data-contact-form
+    data-endpoint={action}
+    data-required-message={validation.required}
+    data-invalid-email-message={validation.invalidEmail}
+    data-success-message={feedback.success}
+    data-error-message={feedback.error}
+    data-sending-message={feedback.sending}
+  >
+    <label>
+      <span>{labels.name}</span>
+      <input type="text" name="name" autocomplete="name" />
+      <small class="contact-form__field-message" data-field-error="name"></small>
+    </label>
+
+    <label>
+      <span>{labels.email}</span>
+      <input type="email" name="email" autocomplete="email" />
+      <small class="contact-form__field-message" data-field-error="email"></small>
+    </label>
+
+    <label>
+      <span>{labels.message}</span>
+      <textarea name="message" rows={6}></textarea>
+      <small class="contact-form__field-message" data-field-error="message"></small>
+    </label>
+
+    <div class="contact-form__actions">
+      <button type="submit">{labels.submit}</button>
+      <p class="contact-form__status" data-form-status aria-live="polite"></p>
+    </div>
+  </form>
+</section>
+
+<script>
+  import { submitContactPayload, validateContactPayload } from '../../lib/contact';
+
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  const fieldNames: Array<'name' | 'email' | 'message'> = ['name', 'email', 'message'];
+
+  if (form instanceof HTMLFormElement) {
+    const currentForm = form;
+    const statusNode = currentForm.querySelector('[data-form-status]');
+    const submitButton = currentForm.querySelector('button[type="submit"]');
+    const messages = {
+      required: currentForm.dataset.requiredMessage || 'required',
+      invalidEmail: currentForm.dataset.invalidEmailMessage || 'invalid email',
+      success: currentForm.dataset.successMessage || 'sent',
+      error: currentForm.dataset.errorMessage || 'unable to send',
+      sending: currentForm.dataset.sendingMessage || 'sending',
+    };
+
+    currentForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      clearErrors();
+      setStatus('');
+
+      const formData = new FormData(currentForm);
+      const payload = {
+        name: String(formData.get('name') || ''),
+        email: String(formData.get('email') || ''),
+        message: String(formData.get('message') || ''),
+      };
+      const validationResult = validateContactPayload(payload, {
+        required: messages.required,
+        invalidEmail: messages.invalidEmail,
+      });
+
+      if (!validationResult.ok) {
+        for (const fieldName of fieldNames) {
+        if (!validationResult.errors[fieldName]) {
+          continue;
+        }
+
+        const field = currentForm.elements.namedItem(fieldName);
+        const errorNode = currentForm.querySelector(`[data-field-error="${fieldName}"]`);
+
+        if (field instanceof HTMLElement) {
+          field.setAttribute('aria-invalid', 'true');
+        }
+
+        if (errorNode instanceof HTMLElement) {
+          errorNode.textContent = validationResult.errors[fieldName] || '';
+        }
+      }
+
+      const firstError = fieldNames
+        .map((fieldName) => validationResult.errors[fieldName])
+        .find((message) => Boolean(message));
+
+      setStatus(firstError || messages.required);
+
+      return;
+      }
+
+      const endpoint = currentForm.dataset.endpoint || '';
+
+      if (!endpoint) {
+        setStatus(messages.error);
+
+        return;
+      }
+
+      setPendingState(true);
+      setStatus(messages.sending);
+
+      try {
+        await submitContactPayload(endpoint, validationResult.value);
+        currentForm.reset();
+        setStatus(messages.success);
+      } catch {
+        setStatus(messages.error);
+      } finally {
+        setPendingState(false);
+      }
+    });
+
+    function clearErrors() {
+      for (const fieldName of fieldNames) {
+        const field = currentForm.elements.namedItem(fieldName);
+        const errorNode = currentForm.querySelector(`[data-field-error="${fieldName}"]`);
+
+        if (field instanceof HTMLElement) {
+          field.removeAttribute('aria-invalid');
+        }
+
+        if (errorNode instanceof HTMLElement) {
+          errorNode.textContent = '';
+        }
+      }
+    }
+
+    function setPendingState(isPending: boolean) {
+      if (!(submitButton instanceof HTMLButtonElement)) {
+        return;
+      }
+
+      submitButton.disabled = isPending;
+    }
+
+    function setStatus(message: string) {
+      if (!(statusNode instanceof HTMLElement)) {
+        return;
+      }
+
+      statusNode.textContent = message;
+      statusNode.dataset.state = message ? 'visible' : 'idle';
+    }
+  }
+</script>
+
+<style>
+  .contact-form-block {
+    display: grid;
+    gap: var(--space-4);
+    padding: var(--space-4);
+    border: 1px solid var(--color-line);
+    background: color-mix(in srgb, var(--color-surface) 65%, transparent);
+  }
+
+  .contact-form {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .contact-form label {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .contact-form span {
+    color: var(--color-muted);
+    font-size: 0.9rem;
+  }
+
+  .contact-form input,
+  .contact-form textarea,
+  .contact-form button {
+    width: 100%;
+    border: 1px solid var(--color-line);
+    border-radius: 0;
+    background: transparent;
+    color: var(--color-text);
+    font: inherit;
+  }
+
+  .contact-form input,
+  .contact-form textarea {
+    padding: 0.9rem 1rem;
+  }
+
+  .contact-form input[aria-invalid='true'],
+  .contact-form textarea[aria-invalid='true'] {
+    border-color: color-mix(in srgb, var(--color-text) 45%, var(--color-line));
+  }
+
+  .contact-form textarea {
+    resize: vertical;
+  }
+
+  .contact-form__field-message,
+  .contact-form__status {
+    min-height: 1.2rem;
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.85rem;
+  }
+
+  .contact-form__actions {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .contact-form button {
+    width: fit-content;
+    padding: 0.9rem 1.25rem;
+    cursor: pointer;
+    transition: color var(--duration-base) var(--ease-base),
+      border-color var(--duration-base) var(--ease-base),
+      opacity var(--duration-base) var(--ease-base);
+  }
+
+  .contact-form button:hover,
+  .contact-form button:focus-visible {
+    color: var(--color-muted);
+    border-color: color-mix(in srgb, var(--color-text) 20%, var(--color-line));
+  }
+
+  .contact-form button:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+</style>

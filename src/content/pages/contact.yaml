@@ -36,3 +36,19 @@ formLabels:
   submit:
     ru: Отправить
     en: Send
+formMessages:
+  required:
+    ru: обязательно
+    en: required
+  invalidEmail:
+    ru: укажите корректный email
+    en: enter a valid email
+  success:
+    ru: сообщение отправлено
+    en: message sent
+  error:
+    ru: заполните обязательные поля или попробуйте снова
+    en: fill the required fields or try again
+  sending:
+    ru: отправка...
+    en: sending...

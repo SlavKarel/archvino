@@ -107,6 +107,13 @@ const pages = defineCollection({
         message: localizedStringSchema,
         submit: localizedStringSchema,
       }),
+      formMessages: z.object({
+        required: localizedStringSchema,
+        invalidEmail: localizedStringSchema,
+        success: localizedStringSchema,
+        error: localizedStringSchema,
+        sending: localizedStringSchema,
+      }),
     }),
   ]),
 });

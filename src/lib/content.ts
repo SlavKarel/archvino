@@ -74,6 +74,7 @@ type ContactPage = {
   }>;
   formHelper: LocalizedString;
   formLabels: Record<'name' | 'email' | 'message' | 'submit', LocalizedString>;
+  formMessages: Record<'required' | 'invalidEmail' | 'success' | 'error' | 'sending', LocalizedString>;
 };
 
 type PageById = {
