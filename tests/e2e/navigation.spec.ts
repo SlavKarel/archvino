@@ -9,6 +9,16 @@ test('localized home renders header, footer, and locale switcher', async ({ page
   await expect(page).toHaveURL(/\/en\/?$/);
 });
 
+test('projects navigation link resolves to a localized projects index page', async ({ page }) => {
+  await page.goto('/ru/');
+
+  await page.getByRole('navigation').getByRole('link', { name: 'Проекты' }).click();
+
+  await expect(page).toHaveURL(/\/ru\/projects\/?$/);
+  await expect(page.getByRole('heading', { level: 1, name: 'Проекты' })).toBeVisible();
+  await expect(page.locator('[data-project-card]')).toHaveCount(3);
+});
+
 test('secondary pages render localized content', async ({ page }) => {
   await page.goto('/ru/about');
   await expect(page).toHaveURL(/\/ru\/about\/?$/);
@@ -18,7 +28,7 @@ test('secondary pages render localized content', async ({ page }) => {
   await page.goto('/ru/services');
   await expect(page).toHaveURL(/\/ru\/services\/?$/);
   await expect(page.getByRole('heading', { level: 1, name: 'Услуги' })).toBeVisible();
-  await expect(page.locator('.services-page__list li')).toHaveCount(3);
+  await expect(page.locator('.services-page__list li')).toHaveCount(4);
 
   await page.goto('/ru/contact');
   await expect(page).toHaveURL(/\/ru\/contact\/?$/);

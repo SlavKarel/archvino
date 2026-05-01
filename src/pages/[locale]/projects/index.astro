@@ -1,0 +1,93 @@
+---
+import ProjectGrid from '../../../components/projects/ProjectGrid.astro';
+import PageLayout from '../../../layouts/PageLayout.astro';
+import { getLocalizedValue, isLocale, LOCALES, type Locale } from '../../../lib/i18n';
+import { getSiteSettings } from '../../../lib/content';
+import { getProjectCategories, getProjects } from '../../../lib/projects';
+import { buildProjectPath } from '../../../lib/routes';
+import { buildSeo } from '../../../lib/seo';
+
+export function getStaticPaths() {
+  return LOCALES.map((locale) => ({ params: { locale } }));
+}
+
+const { locale: localeParam } = Astro.params;
+
+if (!localeParam || !isLocale(localeParam)) {
+  return Astro.redirect('/ru/');
+}
+
+const locale: Locale = localeParam;
+
+const [settings, projects, categories] = await Promise.all([
+  getSiteSettings(),
+  getProjects(locale),
+  getProjectCategories(locale),
+]);
+
+const title = getLocalizedValue(settings.navigation.projects, locale);
+const description = locale === 'ru'
+  ? 'Подборка реализованных и текущих проектов студии archvino.'
+  : 'A selection of built and ongoing projects by archvino.';
+const seo = await buildSeo(locale, {
+  title: `${title} | ${settings.studioName}`,
+  description,
+});
+
+const categoryLabels = new Map(categories.map((category) => [category.slug, category.label]));
+
+const projectCards = projects.map((project) => ({
+  slug: project.slug,
+  categorySlug: project.category,
+  title: project.title,
+  category: categoryLabels.get(project.category) ?? project.category,
+  year: project.year,
+  summary: project.summary,
+  coverAlt: project.cover.alt,
+  coverSrc: project.cover.src,
+  href: buildProjectPath(locale, project.slug),
+}));
+---
+
+<PageLayout
+  locale={locale}
+  pathname={Astro.url.pathname}
+  settings={settings}
+  title={seo.title}
+  description={seo.description}
+>
+  <section class="projects-page">
+    <div class="projects-page__intro page-intro">
+      <h1>{title}</h1>
+      <p>{description}</p>
+    </div>
+
+    <ProjectGrid
+      kicker={locale === 'ru' ? 'Архив' : 'Archive'}
+      title={locale === 'ru' ? 'Все проекты' : 'All projects'}
+      projects={projectCards}
+      categories={categories}
+      filtersLabel={locale === 'ru' ? 'Фильтр проектов' : 'Filter projects'}
+      allLabel={locale === 'ru' ? 'Все' : 'All'}
+    />
+  </section>
+</PageLayout>
+
+<script>
+  import initMotion from '../../../scripts/motion';
+  import initProjectFilters from '../../../scripts/project-filters';
+
+  initMotion();
+  initProjectFilters();
+</script>
+
+<style>
+  .projects-page {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .projects-page__intro {
+    max-width: 40rem;
+  }
+ </style>
