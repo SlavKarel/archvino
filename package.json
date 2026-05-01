@@ -8,13 +8,13 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
+    "cms:proxy": "npx decap-server",
     "test:unit": "vitest run",
     "test:e2e": "playwright test"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.9",
     "astro": "^6.2.1",
-    "keystatic": "^0.0.36",
     "sharp": "^0.34.5"
   },
   "devDependencies": {

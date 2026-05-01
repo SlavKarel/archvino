@@ -28,3 +28,13 @@ describe('content helpers', () => {
     expect(home.servicesPreview).not.toContain('\n');
   });
 });
+
+describe('cms configuration', () => {
+  it('exposes editable collections for settings, pages, taxonomy, and projects', async () => {
+    const config = await import('../../keystatic.config');
+
+    expect(Object.keys(config.cmsCollections)).toEqual(
+      expect.arrayContaining(['settings', 'pages', 'taxonomy', 'projects']),
+    );
+  });
+});

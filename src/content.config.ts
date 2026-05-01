@@ -20,7 +20,7 @@ const sectionSchema = z.object({
 });
 
 const settings = defineCollection({
-  loader: glob({ pattern: '**/*.yaml', base: './src/content/settings' }),
+  loader: glob({ pattern: '**/*.{yaml,yml}', base: './src/content/settings' }),
   schema: z.object({
     studioName: z.string(),
     logo: imageSchema,
@@ -56,7 +56,7 @@ const settings = defineCollection({
 });
 
 const pages = defineCollection({
-  loader: glob({ pattern: '**/*.yaml', base: './src/content/pages' }),
+  loader: glob({ pattern: '**/*.{yaml,yml}', base: './src/content/pages' }),
   schema: z.discriminatedUnion('id', [
     z.object({
       id: z.literal('home'),
@@ -119,7 +119,7 @@ const pages = defineCollection({
 });
 
 const taxonomy = defineCollection({
-  loader: glob({ pattern: '**/*.yaml', base: './src/content/taxonomy' }),
+  loader: glob({ pattern: '**/*.{yaml,yml}', base: './src/content/taxonomy' }),
   schema: z.object({
     categories: z.array(
       z.object({
@@ -131,7 +131,7 @@ const taxonomy = defineCollection({
 });
 
 const projects = defineCollection({
-  loader: glob({ pattern: '**/*.yaml', base: './src/content/projects' }),
+  loader: glob({ pattern: '**/*.{yaml,yml}', base: './src/content/projects' }),
   schema: z.object({
     slug: z.string(),
     category: z.enum(projectCategorySlugs),

@@ -1,0 +1,507 @@
+backend:
+  name: git-gateway
+
+local_backend: true
+site_url: http://localhost:4321
+display_url: http://localhost:4321
+media_folder: src/assets/uploads
+public_folder: /src/assets/uploads
+show_preview_links: true
+slug:
+  encoding: ascii
+  clean_accents: true
+
+collections:
+  - name: settings
+    label: Settings
+    delete: false
+    editor:
+      preview: true
+    files:
+      - name: site
+        label: Site settings
+        file: src/content/settings/site.yaml
+        format: yaml
+        extension: yaml
+        preview_path: ru/
+        fields:
+          - { label: Studio name, name: studioName, widget: string }
+          - label: Logo
+            name: logo
+            widget: object
+            fields:
+              - { label: Image, name: src, widget: image }
+              - label: Alt text
+                name: alt
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+          - label: Navigation
+            name: navigation
+            widget: object
+            fields:
+              - label: Home
+                name: home
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+              - label: Projects
+                name: projects
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+              - label: About
+                name: about
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+              - label: Services
+                name: services
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+              - label: Contact
+                name: contact
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+          - label: Footer text
+            name: footerText
+            widget: object
+            fields:
+              - { label: RU, name: ru, widget: text }
+              - { label: EN, name: en, widget: text }
+          - label: Locale labels
+            name: localeLabels
+            widget: object
+            fields:
+              - label: Russian locale
+                name: ru
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+              - label: English locale
+                name: en
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+          - label: Default SEO
+            name: defaultSeo
+            widget: object
+            fields:
+              - label: Title
+                name: title
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+              - label: Description
+                name: description
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: text }
+                  - { label: EN, name: en, widget: text }
+          - label: Contact
+            name: contact
+            widget: object
+            fields:
+              - { label: Email, name: email, widget: string }
+              - { label: Phone, name: phone, widget: string }
+              - label: Address
+                name: address
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+              - { label: Map URL, name: mapUrl, widget: string }
+          - label: Social links
+            name: socialLinks
+            widget: list
+            fields:
+              - label: Label
+                name: label
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+              - { label: URL, name: url, widget: string }
+
+  - name: pages
+    label: Pages
+    delete: false
+    files:
+      - name: home
+        label: Home page
+        file: src/content/pages/home.yaml
+        format: yaml
+        extension: yaml
+        preview_path: ru/
+        fields:
+          - { label: Page id, name: id, widget: hidden, default: home }
+          - label: Headline
+            name: headline
+            widget: object
+            fields:
+              - { label: RU, name: ru, widget: text }
+              - { label: EN, name: en, widget: text }
+          - label: Intro
+            name: intro
+            widget: object
+            fields:
+              - { label: RU, name: ru, widget: text }
+              - { label: EN, name: en, widget: text }
+          - label: About preview
+            name: aboutPreview
+            widget: object
+            fields:
+              - { label: RU, name: ru, widget: text, required: false }
+              - { label: EN, name: en, widget: text, required: false }
+          - label: Services preview
+            name: servicesPreview
+            widget: object
+            fields:
+              - { label: RU, name: ru, widget: text, required: false }
+              - { label: EN, name: en, widget: text, required: false }
+          - label: Featured projects
+            name: featuredProjectSlugs
+            widget: relation
+            collection: projects
+            search_fields: [slug, title.ru, title.en]
+            value_field: slug
+            display_fields: [slug, title.ru, title.en]
+            multiple: true
+          - label: Contact CTA
+            name: contactCta
+            widget: object
+            fields:
+              - label: Heading
+                name: heading
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+              - label: Body
+                name: body
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: text }
+                  - { label: EN, name: en, widget: text }
+              - label: Label
+                name: label
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+      - name: about
+        label: About page
+        file: src/content/pages/about.yaml
+        format: yaml
+        extension: yaml
+        preview_path: ru/about/
+        fields:
+          - { label: Page id, name: id, widget: hidden, default: about }
+          - label: Title
+            name: title
+            widget: object
+            fields:
+              - { label: RU, name: ru, widget: string }
+              - { label: EN, name: en, widget: string }
+          - label: Biography
+            name: biography
+            widget: object
+            fields:
+              - { label: RU, name: ru, widget: text }
+              - { label: EN, name: en, widget: text }
+          - label: Approach
+            name: approach
+            widget: object
+            fields:
+              - { label: RU, name: ru, widget: text }
+              - { label: EN, name: en, widget: text }
+          - label: Credentials
+            name: credentials
+            widget: object
+            fields:
+              - { label: RU, name: ru, widget: text }
+              - { label: EN, name: en, widget: text }
+          - label: Portrait
+            name: portrait
+            widget: object
+            fields:
+              - { label: Image, name: src, widget: image }
+              - label: Alt text
+                name: alt
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+      - name: services
+        label: Services page
+        file: src/content/pages/services.yaml
+        format: yaml
+        extension: yaml
+        preview_path: ru/services/
+        fields:
+          - { label: Page id, name: id, widget: hidden, default: services }
+          - label: Title
+            name: title
+            widget: object
+            fields:
+              - { label: RU, name: ru, widget: string }
+              - { label: EN, name: en, widget: string }
+          - label: Intro
+            name: intro
+            widget: object
+            fields:
+              - { label: RU, name: ru, widget: text }
+              - { label: EN, name: en, widget: text }
+          - label: Service items
+            name: items
+            widget: list
+            fields:
+              - { label: RU, name: ru, widget: text }
+              - { label: EN, name: en, widget: text }
+          - label: CTA
+            name: cta
+            widget: object
+            fields:
+              - { label: RU, name: ru, widget: text }
+              - { label: EN, name: en, widget: text }
+      - name: contact
+        label: Contact page
+        file: src/content/pages/contact.yaml
+        format: yaml
+        extension: yaml
+        preview_path: ru/contact/
+        fields:
+          - { label: Page id, name: id, widget: hidden, default: contact }
+          - label: Heading
+            name: heading
+            widget: object
+            fields:
+              - { label: RU, name: ru, widget: string }
+              - { label: EN, name: en, widget: string }
+          - label: Intro
+            name: intro
+            widget: object
+            fields:
+              - { label: RU, name: ru, widget: text }
+              - { label: EN, name: en, widget: text }
+          - { label: Email, name: email, widget: string }
+          - { label: Phone, name: phone, widget: string }
+          - label: Address
+            name: address
+            widget: object
+            fields:
+              - { label: RU, name: ru, widget: string }
+              - { label: EN, name: en, widget: string }
+          - { label: Map URL, name: mapUrl, widget: string }
+          - label: Social links
+            name: socialLinks
+            widget: list
+            fields:
+              - label: Label
+                name: label
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+              - { label: URL, name: url, widget: string }
+          - label: Form helper
+            name: formHelper
+            widget: object
+            fields:
+              - { label: RU, name: ru, widget: text }
+              - { label: EN, name: en, widget: text }
+          - label: Form labels
+            name: formLabels
+            widget: object
+            fields:
+              - label: Name
+                name: name
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+              - label: Email
+                name: email
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+              - label: Message
+                name: message
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+              - label: Submit
+                name: submit
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+          - label: Form messages
+            name: formMessages
+            widget: object
+            fields:
+              - label: Required
+                name: required
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+              - label: Invalid email
+                name: invalidEmail
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+              - label: Success
+                name: success
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+              - label: Error
+                name: error
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: text }
+                  - { label: EN, name: en, widget: text }
+              - label: Sending
+                name: sending
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+
+  - name: taxonomy
+    label: Taxonomy
+    delete: false
+    files:
+      - name: project-categories
+        label: Project categories
+        file: src/content/taxonomy/project-categories.yaml
+        format: yaml
+        extension: yaml
+        preview_path: ru/projects/
+        fields:
+          - label: Categories
+            name: categories
+            widget: list
+            fields:
+              - label: Slug
+                name: slug
+                widget: select
+                options:
+                  - { label: Residential, value: residential }
+                  - { label: Cultural, value: cultural }
+                  - { label: Interiors, value: interiors }
+              - label: Label
+                name: label
+                widget: object
+                fields:
+                  - { label: RU, name: ru, widget: string }
+                  - { label: EN, name: en, widget: string }
+
+  - name: projects
+    label: Projects
+    label_singular: Project
+    folder: src/content/projects
+    create: true
+    extension: yaml
+    format: yaml
+    identifier_field: slug
+    slug: '{{fields.slug}}'
+    preview_path: ru/projects/{{slug}}/
+    sortable_fields: [order, year, slug]
+    summary: '{{slug}}'
+    fields:
+      - { label: Slug, name: slug, widget: string }
+      - label: Category
+        name: category
+        widget: select
+        options:
+          - { label: Residential, value: residential }
+          - { label: Cultural, value: cultural }
+          - { label: Interiors, value: interiors }
+      - { label: Year, name: year, widget: number, value_type: int, min: 1900, max: 2100 }
+      - label: Location
+        name: location
+        widget: object
+        fields:
+          - { label: RU, name: ru, widget: string }
+          - { label: EN, name: en, widget: string }
+      - label: Status
+        name: status
+        widget: object
+        fields:
+          - { label: RU, name: ru, widget: string }
+          - { label: EN, name: en, widget: string }
+      - { label: Featured, name: featured, widget: boolean, default: false }
+      - { label: Order, name: order, widget: number, value_type: int, min: 0 }
+      - label: Title
+        name: title
+        widget: object
+        fields:
+          - { label: RU, name: ru, widget: string }
+          - { label: EN, name: en, widget: string }
+      - label: Summary
+        name: summary
+        widget: object
+        fields:
+          - { label: RU, name: ru, widget: text }
+          - { label: EN, name: en, widget: text }
+      - label: Cover
+        name: cover
+        widget: object
+        fields:
+          - { label: Image, name: src, widget: image }
+          - label: Alt text
+            name: alt
+            widget: object
+            fields:
+              - { label: RU, name: ru, widget: string }
+              - { label: EN, name: en, widget: string }
+      - label: Gallery
+        name: gallery
+        widget: list
+        fields:
+          - { label: Image, name: src, widget: image }
+          - label: Alt text
+            name: alt
+            widget: object
+            fields:
+              - { label: RU, name: ru, widget: string }
+              - { label: EN, name: en, widget: string }
+      - label: Sections
+        name: sections
+        widget: list
+        fields:
+          - label: Label
+            name: label
+            widget: object
+            fields:
+              - { label: RU, name: ru, widget: string }
+              - { label: EN, name: en, widget: string }
+          - label: Heading
+            name: heading
+            widget: object
+            fields:
+              - { label: RU, name: ru, widget: string }
+              - { label: EN, name: en, widget: string }
+          - label: Body
+            name: body
+            widget: object
+            fields:
+              - { label: RU, name: ru, widget: text }
+              - { label: EN, name: en, widget: text }
