@@ -2,10 +2,10 @@ backend:
   name: git-gateway
 
 local_backend: true
-site_url: http://localhost:4321
-display_url: http://localhost:4321
-media_folder: src/assets/uploads
-public_folder: /src/assets/uploads
+site_url: http://127.0.0.1:4323
+display_url: http://127.0.0.1:4323
+media_folder: src/assets
+public_folder: /src/assets
 show_preview_links: true
 slug:
   encoding: ascii
