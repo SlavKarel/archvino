@@ -37,7 +37,13 @@ describe('project helpers', () => {
     expect(project?.slug).toBe('villa-moscow');
     expect(project?.title).toBeTruthy();
     expect(project?.cover.alt).toBeTruthy();
+    expect(project?.cover.src).toBeTruthy();
+    expect(project?.cover.src).not.toContain('[object Object]');
+    expect(project?.cover.src).not.toMatch(/^\/src\/assets\//);
     expect(project?.gallery.length).toBeGreaterThan(0);
+    expect(project?.gallery[0]?.src).toBeTruthy();
+    expect(project?.gallery[0]?.src).not.toContain('[object Object]');
+    expect(project?.gallery[0]?.src).not.toMatch(/^\/src\/assets\//);
   });
 
   it('loads sample projects in display order', async () => {

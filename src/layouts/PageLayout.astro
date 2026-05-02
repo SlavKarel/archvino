@@ -12,9 +12,10 @@ type Props = {
   settings: SiteSettings;
   title: string;
   description: string;
+  image?: string;
 };
 
-const { locale, pathname, settings, title, description } = Astro.props;
+const { locale, pathname, settings, title, description, image } = Astro.props;
 
 const navigation = {
   home: getLocalizedValue(settings.navigation.home, locale),
@@ -32,7 +33,7 @@ const localeLabels = {
 const footerText = getLocalizedValue(settings.footerText, locale);
 ---
 
-<BaseLayout locale={locale} title={title} description={description}>
+<BaseLayout locale={locale} title={title} description={description} image={image}>
   <div class="site-frame">
     <Header
       locale={locale}

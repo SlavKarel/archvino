@@ -23,11 +23,6 @@ if (!localeParam || !isLocale(localeParam)) {
 
 const locale: Locale = localeParam;
 
-const projectCoverModules = import.meta.glob('../../assets/projects/*/cover.jpg', {
-  eager: true,
-  import: 'default',
-});
-
 const [settings, home, seo, projects, categories] = await Promise.all([
   getSiteSettings(),
   getHomePageContent(locale),
@@ -49,19 +44,9 @@ const featuredProjects = home.featuredProjectSlugs
     year: project.year,
     summary: project.summary,
     coverAlt: project.cover.alt,
-    coverSrc: resolveProjectCover(project.slug),
+    coverSrc: project.cover.src,
     href: buildProjectPath(locale, project.slug),
   }));
-
-function resolveProjectCover(slug: string): string {
-  const entry = Object.entries(projectCoverModules).find(([path]) => path.endsWith(`/${slug}/cover.jpg`));
-
-  if (!entry) {
-    return '';
-  }
-
-  return String(entry[1]);
-}
 ---
 
 <PageLayout
@@ -70,6 +55,7 @@ function resolveProjectCover(slug: string): string {
   settings={settings}
   title={seo.title}
   description={seo.description}
+  image={seo.image}
 >
   <div class="home-flow">
     <HomeIntro headline={home.headline} intro={home.intro} />

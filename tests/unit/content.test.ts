@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import { getHomePageContent, getSiteSettings } from '../../src/lib/content';
+import { buildDefaultSeo } from '../../src/lib/seo';
 
 describe('content helpers', () => {
   it('returns site settings with localized navigation and seo defaults', async () => {
@@ -26,6 +27,15 @@ describe('content helpers', () => {
     expect(home.servicesPreview.length).toBeGreaterThan(0);
     expect(home.aboutPreview).not.toContain('\n');
     expect(home.servicesPreview).not.toContain('\n');
+  });
+
+  it('resolves the default seo image to a public asset url', async () => {
+    const seo = await buildDefaultSeo('ru');
+
+    expect(seo.image).toBeTruthy();
+    expect(seo.image).not.toContain('[object Object]');
+    expect(seo.image).not.toMatch(/^\/src\/assets\//);
+    expect(seo.image.toLowerCase()).not.toContain('.svg');
   });
 });
 

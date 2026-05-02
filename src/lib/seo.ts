@@ -1,5 +1,7 @@
 import { type Locale, type LocalizedString, getLocalizedValue } from './i18n';
-import { getDefaultSeo, getSiteSettings } from './content';
+import { resolveAssetPath } from './assets';
+import { getDefaultSeo, getHomePageContent, getSiteSettings } from './content';
+import { getProjectBySlug } from './projects';
 
 type SeoInput = {
   title?: string;
@@ -18,11 +20,12 @@ type ProjectSeoInput = {
 
 export async function buildDefaultSeo(locale: Locale) {
   const [settings, defaults] = await Promise.all([getSiteSettings(), getDefaultSeo(locale)]);
+  const image = await getDefaultSeoImage(locale, settings.logo.src);
 
   return {
     title: defaults.title,
     description: defaults.description,
-    image: settings.logo.src,
+    image,
   };
 }
 
@@ -50,4 +53,27 @@ export async function buildProjectSeo(locale: Locale, input: ProjectSeoInput) {
 
 export function localizeSeoField(value: LocalizedString, locale: Locale): string {
   return getLocalizedValue(value, locale);
+}
+
+async function getDefaultSeoImage(locale: Locale, logoSource: string): Promise<string> {
+  const resolvedLogo = resolveAssetPath(logoSource);
+
+  if (!logoSource.toLowerCase().endsWith('.svg')) {
+    return resolvedLogo;
+  }
+
+  const home = await getHomePageContent(locale);
+  const featuredSlug = home.featuredProjectSlugs[0];
+
+  if (!featuredSlug) {
+    return resolvedLogo;
+  }
+
+  const featuredProject = await getProjectBySlug(featuredSlug, locale);
+
+  if (!featuredProject) {
+    return resolvedLogo;
+  }
+
+  return featuredProject.cover.src;
 }

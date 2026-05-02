@@ -1,11 +1,7 @@
 import { getCollection } from 'astro:content';
 
 import { type Locale, getLocalizedValue, type LocalizedString } from './i18n';
-
-const projectAssetModules = import.meta.glob('../assets/projects/**/*.{jpg,jpeg,png,webp,avif}', {
-  eager: true,
-  import: 'default',
-});
+import { resolveAssetPath } from './assets';
 
 type ImageReference = {
   src: string;
@@ -157,14 +153,7 @@ function localizeProject(project: ProjectData, locale: Locale): LocalizedProject
 }
 
 function resolveProjectAssetPath(source: string): string {
-  const moduleKey = source.startsWith('/src/') ? `../${source.slice('/src/'.length)}` : source;
-  const asset = projectAssetModules[moduleKey];
-
-  if (!asset) {
-    return source;
-  }
-
-  return String(asset);
+  return resolveAssetPath(source);
 }
 
 export type { LocalizedProject, ProjectData, TaxonomyData };
