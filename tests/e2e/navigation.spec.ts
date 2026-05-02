@@ -16,7 +16,7 @@ test('projects navigation link resolves to a localized projects index page', asy
 
   await expect(page).toHaveURL(/\/ru\/projects\/?$/);
   await expect(page.getByRole('heading', { level: 1, name: 'Проекты' })).toBeVisible();
-  await expect(page.locator('[data-project-card]')).toHaveCount(3);
+  await expect(page.locator('[data-project-card]')).toHaveCount(4);
 });
 
 test('secondary pages render localized content', async ({ page }) => {

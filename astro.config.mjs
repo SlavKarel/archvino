@@ -2,6 +2,8 @@ import { defineConfig } from 'astro/config';
 
 export default defineConfig({
   redirects: {
-    '/keystatic': '/admin/',
+    '/admin': '/admin/index.html',
+    '/admin/': '/admin/index.html',
+    '/keystatic': '/admin/index.html',
   },
 });

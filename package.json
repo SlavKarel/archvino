@@ -8,7 +8,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "cms:proxy": "npx decap-server",
+    "cms:proxy": "npx decap-server --port 8081 --config public/admin/config.yml",
     "test:unit": "vitest run",
     "test:e2e": "playwright test"
   },
