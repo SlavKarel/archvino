@@ -9,6 +9,8 @@
     "preview": "astro preview",
     "check": "astro check",
     "cms:proxy": "npx decap-server --port 8081 --config public/admin/config.yml",
+    "cms:configure:prod": "cp public/admin/config.production.yml public/admin/config.yml",
+    "build:prod": "npm run cms:configure:prod && npm run build",
     "test:unit": "vitest run",
     "test:e2e": "playwright test"
   },

@@ -1,0 +1,21 @@
+version: "3.8"
+
+services:
+  oauth-proxy:
+    image: netlify/netlify-cms-oauth-provider:latest
+    container_name: archvino_oauth_proxy
+    restart: unless-stopped
+    ports:
+      # bind to localhost only by default; nginx will reverse-proxy /auth -> 127.0.0.1:3000
+      - "127.0.0.1:3000:3000"
+    environment:
+      - GITHUB_CLIENT_ID=${GITHUB_CLIENT_ID}
+      - GITHUB_CLIENT_SECRET=${GITHUB_CLIENT_SECRET}
+      - JWT_SECRET=${JWT_SECRET}
+      - BASE_URL=${BASE_URL}
+      - PORT=3000
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"

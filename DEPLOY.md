@@ -362,3 +362,15 @@ If you want me to: I can (pick one)
 - create a fully tested GitHub Actions workflow that builds and rsyncs to your VPS (you will need to provide the `VPS_SSH_KEY` secret).
 
 Choose which automation you prefer and I will add the scripts/workflow to the repo.
+
+Production CMS note
+-------------------
+
+This project ships a development CMS config at `public/admin/config.yml` (it uses the local Decap proxy). For production we provided `public/admin/config.production.yml` which is pre-configured to use the GitHub backend and points at an OAuth proxy. Recommended production workflow:
+
+1. Deploy an OAuth proxy (see `ops/oauth-proxy/README.md` for guidance).
+2. On the server, run `npm run cms:configure:prod` (this copies `public/admin/config.production.yml` to `public/admin/config.yml`).
+3. Run `npm run build` (or `npm run build:prod` which runs the configure step automatically).
+4. Verify the admin UI at `https://archvino.ru/admin` and perform a test edit.
+
+The OAuth proxy must be reachable at the `auth_endpoint` configured in `public/admin/config.production.yml` before editors can sign in and commit changes to GitHub.

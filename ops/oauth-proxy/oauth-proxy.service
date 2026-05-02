@@ -1,0 +1,22 @@
+[Unit]
+Description=Archvino OAuth Proxy (docker-compose)
+Requires=docker.service
+After=docker.service network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/var/www/archvino/ops/oauth-proxy
+EnvironmentFile=/var/www/archvino/ops/oauth-proxy/.env
+ExecStart=/usr/bin/docker compose up -d --remove-orphans
+ExecStop=/usr/bin/docker compose down
+TimeoutStartSec=60
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
+
+# Notes:
+# - Copy this file to /etc/systemd/system/oauth-proxy.service and run
+#   `sudo systemctl daemon-reload && sudo systemctl enable --now oauth-proxy.service`
+# - The service runs `docker compose up -d` on start (so Docker manages the container lifecycle).
