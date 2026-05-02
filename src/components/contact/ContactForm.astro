@@ -40,20 +40,20 @@ const { action, helper, labels, validation, feedback } = Astro.props;
   >
     <label>
       <span>{labels.name}</span>
-      <input type="text" name="name" autocomplete="name" />
-      <small class="contact-form__field-message" data-field-error="name"></small>
+      <input id="contact-name" type="text" name="name" autocomplete="name" aria-describedby="contact-name-error" />
+      <small id="contact-name-error" class="contact-form__field-message" data-field-error="name" aria-live="polite"></small>
     </label>
 
     <label>
       <span>{labels.email}</span>
-      <input type="email" name="email" autocomplete="email" />
-      <small class="contact-form__field-message" data-field-error="email"></small>
+      <input id="contact-email" type="email" name="email" autocomplete="email" aria-describedby="contact-email-error" />
+      <small id="contact-email-error" class="contact-form__field-message" data-field-error="email" aria-live="polite"></small>
     </label>
 
     <label>
       <span>{labels.message}</span>
-      <textarea name="message" rows={6}></textarea>
-      <small class="contact-form__field-message" data-field-error="message"></small>
+      <textarea id="contact-message" name="message" rows={6} aria-describedby="contact-message-error"></textarea>
+      <small id="contact-message-error" class="contact-form__field-message" data-field-error="message" aria-live="polite"></small>
     </label>
 
     <div class="contact-form__actions">

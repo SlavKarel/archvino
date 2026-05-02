@@ -10,7 +10,7 @@ phone: +7 999 000 00 00
 address:
   ru: Москва, Россия
   en: Moscow, Russia
-mapUrl: https://maps.example.com/archvino
+mapUrl: https://maps.google.com/?q=Moscow,+Russia
 socialLinks:
   - label:
       ru: Телеграм
