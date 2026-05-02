@@ -19,7 +19,7 @@ Recommended approach
 
 Using Docker (recommended)
 
-Create a `docker-compose.yml` like this (adapt the environment variables):
+Use the checked-in `docker-compose.yml` in this directory and adapt the environment variables through `.env`:
 
 ```yaml
 version: '3.8'
@@ -33,20 +33,20 @@ services:
       - JWT_SECRET=${JWT_SECRET}
       - BASE_URL=https://archvino.ru
     ports:
-      - "3001:3000"
+      - "127.0.0.1:3000:3000"
 ```
 
 Notes:
 - Replace the env placeholders with the values from the GitHub OAuth app.
 - `JWT_SECRET` should be a strong random string used by the proxy to sign tokens.
-- The proxy will be reachable at `https://your-vps:3001` (or via a reverse proxy path such as `https://archvino.ru/auth`).
+- Keep the container bound to localhost and expose it through nginx at `https://archvino.ru/auth`.
 
 Reverse proxy setup
 - Run the oauth-proxy on an internal port and configure nginx to route `/auth` to the proxy. Example (nginx):
 
 ```nginx
 location /auth/ {
-  proxy_pass http://127.0.0.1:3001/;
+  proxy_pass http://127.0.0.1:3000/;
   proxy_set_header Host $host;
   proxy_set_header X-Real-IP $remote_addr;
 }
@@ -59,21 +59,20 @@ CMS configuration
 backend:
   name: github
   repo: gavril-s/archvino
-  branch: main
+  branch: master
 
 auth_endpoint: https://archvino.ru/auth
 ```
 
 Build process
-- Before you run a production build on the VPS, copy `public/admin/config.production.yml` into place:
+- Use the production build script so the generated site gets the GitHub-backed CMS config without modifying the tracked development config:
 
 ```sh
-cp public/admin/config.production.yml public/admin/config.yml
-npm ci && npm run build
+npm ci && npm run build:prod
 ```
 
 Security notes
 - Protect the proxy endpoint with a strict TLS configuration.
-- Keep the GitHub client secret confidential; store it in the environment or your secret manager — never commit it into the repository.
+- Keep the GitHub client secret confidential; store it in the environment or your secret manager and keep `ops/oauth-proxy/.env` out of git.
 
 If you want me to add a `docker-compose.yml` and a systemd unit for the proxy in this repo, tell me and I will add them.

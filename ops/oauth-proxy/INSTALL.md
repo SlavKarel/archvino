@@ -60,7 +60,7 @@ sudo systemctl status oauth-proxy.service
 
 - Visit: https://archvino.ru/admin
 - Click sign in → it should redirect to GitHub and return to the site via `/auth/callback` and finish the flow.
-- If sign-in succeeds, the CMS will be able to create commits/PRs against the configured `repo` in `public/admin/config.production.yml`.
+- If sign-in succeeds, the CMS will be able to create direct commits to the configured `repo` on `master` as defined in `public/admin/config.production.yml`.
 
 Security notes
 - Never commit `.env` with real secrets. Use `.env.example` only in the repo.

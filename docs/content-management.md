@@ -1,13 +1,13 @@
-# Content Management with Keystatic
+# Content Management with Decap CMS
 
-This document describes how to manage content on the archvino website using Keystatic, a file-based Git-backed CMS.
+This document describes how to manage content on the archvino website using Decap CMS, a Git-backed CMS.
 
 ## Overview
 
-Keystatic is a modern CMS that stores content as YAML files directly in the Git repository. This approach provides:
+Decap CMS stores content as YAML files directly in the Git repository. This approach provides:
 
 - **Version control**: All content changes are tracked in Git
-- **Editorial workflow**: Content changes go through the standard PR/review process
+- **Editorial workflow**: Production edits can commit directly to `master`
 - **Local development**: Edit content locally with the dev server
 - **No database**: Content lives alongside code in the repository
 
@@ -18,7 +18,7 @@ The admin panel is available at two URLs:
 | URL | Description |
 |-----|-------------|
 | `/admin` | Primary admin URL (redirects to index.html) |
-| `/keystatic` | Alias that redirects to `/admin/index.html` |
+| `/keystatic` | Legacy alias that redirects to `/admin/index.html` |
 
 ### Running Locally
 
@@ -32,7 +32,7 @@ This starts the CMS on port 8081 with local file storage. Access it at `http://l
 
 ### Production Access
 
-In production, the CMS uses GitHub API for content storage. Access the admin panel at your deployed URL (e.g., `https://your-site.com/admin`).
+In production, the CMS uses the GitHub backend behind the OAuth proxy. Access the admin panel at your deployed URL (for example `https://archvino.ru/admin`).
 
 ## Content Collections
 
@@ -143,20 +143,22 @@ When running `npm run cms:proxy`:
 
 ### Production Mode
 
-In production (`config.production.yml`):
+In production (`npm run build:prod` writes `config.production.yml` into `dist/admin/config.yml`):
 
-- Uses GitHub API for content storage
-- Changes committed to GitHub repository
-- Content updates trigger deployments
-- Enables editorial workflow with reviews
+- Uses the GitHub API for content storage
+- Sends editors through the OAuth proxy at `/auth`
+- Commits changes directly to the `master` branch
+- Requires a rebuild/deploy on the VPS to publish the updated static files
 
 **Production configuration (`public/admin/config.production.yml`):**
 
 ```yaml
-storage:
-  baseBranch: main
-  repo: owner/repo
-  githubToken: ${GITHUB_TOKEN}
+backend:
+  name: github
+  repo: gavril-s/archvino
+  branch: master
+
+auth_endpoint: https://archvino.ru/auth
 ```
 
 ## Editing Content Workflow
@@ -186,11 +188,11 @@ storage:
 
 2. Make content changes through the CMS
 
-3. Keystatic commits changes to the GitHub repository
+3. Decap commits changes to the GitHub repository
 
-4. A pull request is created for review
+4. The change lands on `master`
 
-5. After merge, the site rebuilds with new content
+5. Rebuild and redeploy the site from the VPS with `npm run build:prod`
 
 ## Image Handling
 
@@ -213,7 +215,7 @@ public/images/
 
 ### Using Images in Content
 
-When adding images in Keystatic:
+When adding images in Decap CMS:
 
 1. **Cover images**: Select from `public/images/projects/[slug]/`
 2. **Gallery images**: Add multiple images from the gallery folder
@@ -231,15 +233,13 @@ When adding images in Keystatic:
 
 **File**: `public/admin/config.yml`
 
-Keystatic main configuration for local development:
+Decap CMS configuration used for local development:
 
 ```yaml
-storage:
-  backend: local
-  # Files stored in src/content/
+backend:
+  name: git-gateway
 
-keystatic: # Admin UI config
-  # Collections, fields, and UI settings
+local_backend: true
 ```
 
 ### Production Configuration
@@ -249,18 +249,20 @@ keystatic: # Admin UI config
 Production-specific overrides:
 
 ```yaml
-storage:
-  backend: github
-  baseBranch: main
-  repo: username/archvino
-  githubToken: ${GITHUB_TOKEN}
+backend:
+  name: github
+  repo: gavril-s/archvino
+  branch: master
+
+auth_endpoint: https://archvino.ru/auth
 ```
 
 ### How Configuration Works
 
-1. Keystatic loads `config.yml` by default
-2. When `NODE_ENV=production`, it loads `config.production.yml`
-3. Production config overrides storage backend to use GitHub
+1. Decap loads `/admin/config.yml` in the admin UI
+2. Local development serves `public/admin/config.yml`
+3. `npm run build:prod` writes the production config to `dist/admin/config.yml`
+4. The production build switches the backend to GitHub and keeps auth behind the OAuth proxy
 
 ## Best Practices
 
@@ -279,11 +281,9 @@ storage:
 
 ### Workflow
 
-1. Create a feature branch for content changes
-2. Use the CMS to make edits
-3. Review changes locally
-4. Submit PR for review
-5. Merge to deploy
+1. Use the CMS to make edits
+2. Review the commit on `master`
+3. Rebuild and redeploy the VPS with `npm run build:prod`
 
 ## Troubleshooting
 

@@ -4,13 +4,13 @@ This document provides guidance for agents working on the archvino project.
 
 ## Project Overview
 
-archvino is an Astro-based architect portfolio website. It features project galleries, multi-language support, a contact form, and Keystatic CMS for content management.
+archvino is an Astro-based architect portfolio website. It features project galleries, multi-language support, a contact form, and Decap CMS for content management.
 
 ## Available Documentation
 
 - [Project Overview](docs/project-overview.md) - Tech stack, directory structure, key concepts
 - [Development](docs/development.md) - Local setup, npm commands, content management
-- [Content Management](docs/content-management.md) - Keystatic CMS, content types, admin panel
+- [Content Management](docs/content-management.md) - Decap CMS, content types, admin panel
 - [Deployment](docs/deployment.md) - Build process, production deployment, oauth-proxy
 - [Testing](docs/testing.md) - Unit tests (Vitest), e2e tests (Playwright)
 
@@ -64,10 +64,10 @@ npm run test:e2e
 - **Framework**: Astro 6.2.1
 - **Language**: TypeScript
 - **Testing**: Vitest (unit), Playwright (e2e)
-- **CMS**: Keystatic
+- **CMS**: Decap CMS
 
 ## Additional Resources
 
 - [Astro Documentation](https://docs.astro.build)
-- [Keystatic Documentation](https://keystatic.com)
+- [Decap CMS Documentation](https://decapcms.org/docs/intro/)
 - [Playwright Documentation](https://playwright.dev)

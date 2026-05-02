@@ -29,14 +29,14 @@ This guide covers everything you need to know to develop, build, and maintain th
 | `npm run build` | Build the site for development |
 | `npm run preview` | Preview the built site locally |
 | `npm run check` | Run Astro type checking |
-| `npm run cms:proxy` | Start Keystatic CMS on port 8081 |
+| `npm run cms:proxy` | Start the local Decap CMS proxy on port 8081 |
 | `npm run build:prod` | Build for production (uses production CMS config) |
 | `npm run test:unit` | Run unit tests with Vitest |
 | `npm run test:e2e` | Run end-to-end tests with Playwright |
 
 ## Running the CMS Locally
 
-Keystatic CMS provides a web interface for managing content.
+Decap CMS provides a web interface for managing content.
 
 1. Start the CMS proxy:
    ```bash
@@ -124,8 +124,8 @@ npm run build:prod
 ```
 
 This command:
-1. Copies the production CMS config (`public/admin/config.production.yml` → `public/admin/config.yml`)
-2. Runs `astro build`
+1. Runs `astro build`
+2. Copies the production CMS config to `dist/admin/config.yml`
 
 ## Testing
 
@@ -156,6 +156,6 @@ archvino/
 │   ├── pages/            # Astro pages
 │   └── styles/           # CSS styles
 ├── public/
-│   └── admin/            # Keystatic CMS configuration
+│   └── admin/            # Decap CMS configuration
 └── docs/                 # Documentation
 ```

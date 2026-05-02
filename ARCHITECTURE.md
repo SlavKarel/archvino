@@ -38,8 +38,8 @@ archvino is a **static site generator (SSG)** built with Astro that generates a 
 │         Content Collections (src/content/)               │
 │         Settings, Pages, Projects, Taxonomy             │
 ├─────────────────────────────────────────────────────────┤
-│           Keystatic CMS (public/admin/)                  │
-│            File-based Git-backed content                │
+│            Decap CMS (public/admin/)                    │
+│        Git-backed admin UI and content commits          │
 └─────────────────────────────────────────────────────────┘
 ```
 
@@ -51,7 +51,7 @@ archvino is a **static site generator (SSG)** built with Astro that generates a 
 |-------|------------|---------|---------|
 | Framework | Astro | 6.2.1 | Static site generation |
 | Language | TypeScript | 5.9.3 | Type safety |
-| CMS | Keystatic | Latest | Content management |
+| CMS | Decap CMS | Latest | Content management |
 | Styling | CSS | - | Custom properties design system |
 | Testing | Vitest | 4.1.5 | Unit tests |
 | E2E Testing | Playwright | 1.59.1 | End-to-end tests |
@@ -131,13 +131,13 @@ archvino is a **static site generator (SSG)** built with Astro that generates a 
 │       ├── components.css    # Component styles
 │       └── motion.css        # Animations
 ├── public/                   # Static assets
-│   └── admin/                # Keystatic admin panel
+│   └── admin/                # Decap CMS admin panel
 ├── ops/                      # Operations
 │   └── oauth-proxy/          # Admin panel protection
 ├── tests/                    # Test fixtures
 ├── docs/                     # Documentation
 ├── astro.config.mjs          # Astro configuration
-├── keystatic.config.ts       # Keystatic config
+├── keystatic.config.ts       # Lightweight editor metadata used by tests
 ├── vitest.config.ts          # Vitest config
 └── playwright.config.ts      # Playwright config
 ```
@@ -405,7 +405,7 @@ Static HTML
 npm run build              # Standard build
 
 # Production build
-npm run build:prod         # Configures CMS + builds
+npm run build:prod         # Builds and injects the production CMS config into dist/admin/config.yml
 
 # Preview build
 npm run preview            # Preview production build
@@ -421,7 +421,7 @@ The `dist/` directory contains:
 
 ### Deployment
 
-The site is deployed as static files to any hosting provider (Nginx, Vercel, Netlify, etc.).
+The site is deployed on a VPS and served by nginx from the generated `dist/` directory.
 
 ---
 
@@ -434,7 +434,7 @@ export default defineConfig({
   site: process.env.SITE || 'https://archvino.ru',
   redirects: {
     '/admin': '/admin/index.html',
-    '/keystatic': '/admin/index.html',
+    '/keystatic': '/admin/index.html', // legacy alias to the Decap admin entry
   },
 });
 ```

@@ -11,7 +11,7 @@
 backend:
   name: github
   repo: gavril-s/archvino
-  branch: main
+  branch: master
 
 # This points the CMS client to the OAuth proxy responsible for exchanging the GitHub code
 # for a token. Deploy the proxy at this path (see ops/oauth-proxy/README.md):
