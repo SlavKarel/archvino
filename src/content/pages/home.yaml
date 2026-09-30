@@ -12,9 +12,11 @@ servicesPreview:
   ru: Архитектурная концепция, интерьер и сопровождение реализации собираются в один спокойный рабочий процесс.
   en: Architectural concept, interiors, and delivery support are shaped into one calm working process.
 featuredProjectSlugs:
-  - villa-moscow
-  - gallery-house
-  - studio-loft
+  - historic-centre
+  - urban-residential
+  - timber-pavilion
+  - single-storey-house
+  - brick-house
 contactCta:
   heading:
     ru: Обсудить будущий проект
