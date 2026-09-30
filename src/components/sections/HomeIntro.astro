@@ -8,7 +8,6 @@ const { headline, intro } = Astro.props;
 ---
 
 <section class="home-intro">
-  <p class="home-intro__eyebrow">archvino</p>
   <h1>{headline}</h1>
   <p class="home-intro__body">{intro}</p>
 </section>
@@ -16,21 +15,25 @@ const { headline, intro } = Astro.props;
 <style>
   .home-intro {
     display: grid;
-    gap: var(--space-4);
-    max-width: 42rem;
+    gap: var(--space-3);
+    max-width: 54rem;
     padding-block: var(--space-6) var(--space-7);
   }
 
-  .home-intro__eyebrow {
-    color: var(--color-muted);
-    font-size: 0.78rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
+  .home-intro h1 {
+    font-size: clamp(2.75rem, 8vw, 6rem);
+    font-weight: 750;
+    letter-spacing: -0.065em;
+    line-height: 0.92;
   }
 
   .home-intro__body {
     max-width: 34rem;
-    font-size: 1.05rem;
-    line-height: 1.7;
+    color: var(--color-text);
+    font-size: clamp(0.95rem, 2vw, 1.2rem);
+    font-weight: 650;
+    letter-spacing: 0.16em;
+    line-height: 1.3;
+    text-transform: uppercase;
   }
-  </style>
+</style>
