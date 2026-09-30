@@ -14,8 +14,10 @@ const { images } = Astro.props;
 <section class="project-gallery" data-project-gallery>
   {
     images.map((image, index) => (
-      <figure class:list={["project-gallery__item", index === 0 && 'project-gallery__item--wide']}>
-        <img src={image.src} alt={image.alt} loading={index === 0 ? 'eager' : 'lazy'} />
+      <figure class:list={["project-gallery__item", index % 3 === 0 && 'project-gallery__item--wide']}>
+        <div class="project-gallery__media" data-parallax data-parallax-speed={index % 2 === 0 ? '0.065' : '0.045'}>
+          <img src={image.src} alt={image.alt} loading={index === 0 ? 'eager' : 'lazy'} />
+        </div>
       </figure>
     ))
   }
@@ -36,12 +38,22 @@ const { images } = Astro.props;
     grid-column: 1 / -1;
   }
 
+  .project-gallery__media {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: var(--radius-card);
+  }
+
+  .project-gallery__item--wide .project-gallery__media { aspect-ratio: 16 / 8.5; }
+
   .project-gallery img {
+    height: 112%;
     aspect-ratio: 4 / 3;
     width: 100%;
-    border-radius: var(--radius-card);
     object-fit: cover;
     background: rgba(32, 32, 27, 0.08);
+    transform: translate3d(0, var(--parallax-y, 0px), 0);
+    will-change: transform;
   }
 
   @media (max-width: 48rem) {
@@ -52,5 +64,12 @@ const { images } = Astro.props;
     .project-gallery__item--wide {
       grid-column: auto;
     }
+
+    .project-gallery__item--wide .project-gallery__media { aspect-ratio: 4 / 3; }
+    .project-gallery img { height: 100%; transform: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-gallery img { transform: none; }
   }
 </style>

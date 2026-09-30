@@ -7,7 +7,7 @@ type Project = {
   categorySlug: string;
   title: string;
   category: string;
-  year: number;
+  year?: number;
   summary: string;
   coverAlt: string;
   coverSrc: string;
@@ -38,7 +38,7 @@ const { title, kicker, projects, categories, filtersLabel, allLabel } = Astro.pr
   </div>
   <ProjectFilters label={filtersLabel} allLabel={allLabel} categories={categories} />
   <div class="project-grid">
-    {projects.map((project) => (
+    {projects.map((project, index) => (
       <div
         class="project-grid__item"
         data-project-item
@@ -50,6 +50,7 @@ const { title, kicker, projects, categories, filtersLabel, allLabel } = Astro.pr
           title={project.title}
           category={project.category}
           year={project.year}
+          index={index}
           summary={project.summary}
           coverSrc={project.coverSrc}
           coverAlt={project.coverAlt}
@@ -62,7 +63,7 @@ const { title, kicker, projects, categories, filtersLabel, allLabel } = Astro.pr
 <style>
   .project-grid-section {
     display: grid;
-    gap: var(--space-5);
+    gap: var(--space-6);
   }
 
   .project-grid-section__header {
@@ -86,19 +87,7 @@ const { title, kicker, projects, categories, filtersLabel, allLabel } = Astro.pr
 
   .project-grid {
     display: grid;
-    gap: var(--space-5);
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1rem, 3vw, 2.5rem);
   }
 
-  @media (max-width: 64rem) {
-    .project-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-
-  @media (max-width: 42rem) {
-    .project-grid {
-      grid-template-columns: 1fr;
-    }
-  }
   </style>
