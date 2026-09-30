@@ -3,6 +3,14 @@ import { getCollection } from 'astro:content';
 import { type Locale, getLocalizedValue, type LocalizedString } from './i18n';
 import { resolveAssetPath } from './assets';
 
+const ACTIVE_PROJECT_SLUGS = new Set([
+  'historic-centre',
+  'urban-residential',
+  'timber-pavilion',
+  'single-storey-house',
+  'brick-house',
+]);
+
 type ImageReference = {
   src: string;
   alt: LocalizedString;
@@ -91,16 +99,26 @@ export function filterProjectsByCategory<T extends CategorizableProject>(project
 export async function getProjects(locale: Locale): Promise<LocalizedProject[]> {
   const entries = await getCollection('projects');
 
-  return sortProjects(entries.map((entry) => localizeProject(entry.data as ProjectData, locale)));
+  return sortProjects(
+    entries
+      .filter((entry) => ACTIVE_PROJECT_SLUGS.has((entry.data as ProjectData).slug))
+      .map((entry) => localizeProject(entry.data as ProjectData, locale)),
+  );
 }
 
 export async function getProjectSlugs(): Promise<string[]> {
   const entries = await getCollection('projects');
 
-  return entries.map((entry) => (entry.data as ProjectData).slug);
+  return entries
+    .map((entry) => (entry.data as ProjectData).slug)
+    .filter((slug) => ACTIVE_PROJECT_SLUGS.has(slug));
 }
 
 export async function getProjectBySlug(slug: string, locale: Locale): Promise<LocalizedProject | undefined> {
+  if (!ACTIVE_PROJECT_SLUGS.has(slug)) {
+    return undefined;
+  }
+
   const entries = await getCollection('projects');
   const entry = entries.find((item) => item.data.slug === slug);
 
