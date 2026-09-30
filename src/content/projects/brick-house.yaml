@@ -1,0 +1,27 @@
+slug: brick-house
+category: residential
+featured: true
+order: 5
+title: { ru: Кирпичный дом, en: Brick House }
+summary:
+  ru: Двухэтажный дом с теплым кирпичным фасадом, глубокой террасой и выразительным вечерним светом.
+  en: A two-storey house with warm brick facades, a deep terrace, and expressive evening light.
+cover:
+  src: ../assets/projects/brick-house/cover.jpg
+  alt: { ru: Двухэтажный кирпичный дом вечером, en: Two-storey brick house at dusk }
+gallery:
+  - src: ../assets/projects/brick-house/view-01.jpg
+    alt: { ru: Фасад кирпичного дома с террасой, en: Brick house facade with terrace }
+  - src: ../assets/projects/brick-house/view-02.jpg
+    alt: { ru: Главный фасад кирпичного дома, en: Main facade of the brick house }
+sections:
+  - label: { ru: Материал, en: Material }
+    heading: { ru: Тепло кирпича, en: The warmth of brick }
+    body:
+      ru: Кладка задает дому тактильность, а темные металлические линии кровли и навесов собирают объем в строгий силуэт.
+      en: Brickwork gives the house a tactile quality, while dark metal rooflines and canopies form a precise silhouette.
+  - label: { ru: Свет, en: Light }
+    heading: { ru: Архитектура после заката, en: Architecture after sunset }
+    body:
+      ru: Линейная подсветка подчеркивает карнизы и глубину проемов, превращая вечерний фасад в отдельный сценарий восприятия.
+      en: Linear lighting emphasizes the cornices and depth of openings, giving the facade a distinct presence after dark.

@@ -1,0 +1,43 @@
+slug: historic-centre
+category: residential
+featured: true
+order: 1
+title:
+  ru: Дом в историческом центре
+  en: House in the Historic Centre
+summary:
+  ru: Работа с существующим городским контекстом, масштабом улицы и спокойным ритмом фасада.
+  en: A study of the existing urban context, street scale, and a restrained facade rhythm.
+cover:
+  src: ../assets/projects/historic-centre/cover.jpg
+  alt:
+    ru: Историческая городская улица
+    en: Historic city street
+gallery:
+  - src: ../assets/projects/historic-centre/view-01.jpg
+    alt: { ru: Общий вид здания, en: Overall view of the building }
+  - src: ../assets/projects/historic-centre/view-02.jpg
+    alt: { ru: Фасад в городском окружении, en: Facade in its urban setting }
+  - src: ../assets/projects/historic-centre/view-03.jpg
+    alt: { ru: Вид со стороны улицы, en: View from the street }
+  - src: ../assets/projects/historic-centre/view-04.jpg
+    alt: { ru: Входная группа, en: Entrance area }
+  - src: ../assets/projects/historic-centre/view-05.jpg
+    alt: { ru: Фрагмент фасада, en: Facade detail }
+  - src: ../assets/projects/historic-centre/view-06.jpg
+    alt: { ru: Дворовый фасад, en: Courtyard facade }
+  - src: ../assets/projects/historic-centre/view-07.jpg
+    alt: { ru: Вечерний вид, en: Evening view }
+  - src: ../assets/projects/historic-centre/view-08.jpg
+    alt: { ru: Архитектурная визуализация, en: Architectural visualization }
+sections:
+  - label: { ru: Контекст, en: Context }
+    heading: { ru: Продолжение улицы, en: A continuation of the street }
+    body:
+      ru: Пропорции, членения и материал фасада поддерживают сложившийся масштаб окружения. Архитектура остается заметной, но не спорит с исторической застройкой.
+      en: The proportions, articulation, and facade material respond to the established scale. The architecture has a clear presence without competing with its historic surroundings.
+  - label: { ru: Фасад, en: Facade }
+    heading: { ru: Ритм света и глубины, en: A rhythm of light and depth }
+    body:
+      ru: Выступающие плоскости, глубокие проемы и сдержанная палитра собирают фасад в цельную спокойную композицию.
+      en: Projecting planes, deep openings, and a restrained palette form a calm and coherent composition.

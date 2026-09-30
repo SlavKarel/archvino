@@ -1,0 +1,25 @@
+slug: timber-pavilion
+category: cultural
+featured: true
+order: 3
+title: { ru: Деревянный павильон, en: Timber Pavilion }
+summary:
+  ru: Небольшой павильон, где конструкция становится главным мотивом архитектурного образа.
+  en: A compact pavilion where the structure becomes the defining architectural motif.
+cover:
+  src: ../assets/projects/timber-pavilion/cover.jpg
+  alt: { ru: Чертежи фасадов деревянного павильона, en: Elevation drawings of a timber pavilion }
+gallery:
+  - src: ../assets/projects/timber-pavilion/view-01.jpg
+    alt: { ru: Развертки фасадов деревянного павильона, en: Timber pavilion elevation studies }
+sections:
+  - label: { ru: Конструкция, en: Structure }
+    heading: { ru: Каркас как орнамент, en: Structure as ornament }
+    body:
+      ru: Рисунок стоек, раскосов и ферм остается открытым и задает павильону узнаваемый масштаб и характер.
+      en: The exposed pattern of posts, braces, and trusses gives the pavilion its recognizable scale and character.
+  - label: { ru: Чертеж, en: Drawing }
+    heading: { ru: Архитектура через детали, en: Architecture through detail }
+    body:
+      ru: Фасадные развертки показывают взаимосвязь материала, освещения и декоративных элементов еще до реализации.
+      en: The elevation studies reveal the relationship between material, lighting, and decorative elements before construction.

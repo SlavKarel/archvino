@@ -1,0 +1,27 @@
+slug: single-storey-house
+category: residential
+featured: true
+order: 4
+title: { ru: Одноэтажный дом, en: Single-storey House }
+summary:
+  ru: Компактный загородный дом с симметричным входом, широким карнизом и спокойной пластикой фасада.
+  en: A compact country house with a symmetrical entrance, broad cornice, and restrained facade composition.
+cover:
+  src: ../assets/projects/single-storey-house/cover.jpg
+  alt: { ru: Одноэтажный дом в саду, en: Single-storey house in a garden }
+gallery:
+  - src: ../assets/projects/single-storey-house/view-01.jpg
+    alt: { ru: Угловой вид одноэтажного дома, en: Corner view of the single-storey house }
+  - src: ../assets/projects/single-storey-house/view-02.jpg
+    alt: { ru: Главный фасад одноэтажного дома, en: Main facade of the single-storey house }
+sections:
+  - label: { ru: Композиция, en: Composition }
+    heading: { ru: Дом, собранный вокруг входа, en: A house composed around its entrance }
+    body:
+      ru: Центральный портик формирует ось, а чередование кирпича и светлых деталей придает длинному фасаду ясный ритм.
+      en: The central portico establishes an axis, while brick and light-toned details give the long facade a clear rhythm.
+  - label: { ru: Масштаб, en: Scale }
+    heading: { ru: Горизонталь сада, en: The garden horizon }
+    body:
+      ru: Невысокий объем и выразительный карниз связывают архитектуру с ландшафтом и сохраняют камерный характер дома.
+      en: The low volume and pronounced cornice connect the architecture to the landscape and preserve an intimate character.

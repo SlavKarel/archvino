@@ -1,0 +1,29 @@
+slug: urban-residential
+category: residential
+featured: true
+order: 2
+title: { ru: Городской жилой дом, en: Urban Residential Building }
+summary:
+  ru: Многоэтажный жилой объем с ясной сеткой фасада и подчеркнутой входной группой.
+  en: A multi-storey residential volume with a clear facade grid and a defined entrance.
+cover:
+  src: ../assets/projects/urban-residential/cover.jpg
+  alt: { ru: Фасад городского жилого дома, en: Facade of an urban residential building }
+gallery:
+  - src: ../assets/projects/urban-residential/view-01.jpg
+    alt: { ru: Общий вид жилого дома, en: Overall view of the residential building }
+  - src: ../assets/projects/urban-residential/view-02.jpg
+    alt: { ru: Входная группа жилого дома, en: Residential entrance }
+  - src: ../assets/projects/urban-residential/view-03.jpg
+    alt: { ru: Фасад вдоль улицы, en: Street-facing facade }
+sections:
+  - label: { ru: Образ, en: Character }
+    heading: { ru: Четкий городской ритм, en: A clear urban rhythm }
+    body:
+      ru: Вертикальные панели и оконная сетка уменьшают визуальный масштаб протяженного объема и связывают отдельные этажи в единый фасад.
+      en: Vertical panels and the window grid reduce the visual scale of the long volume and connect its floors into a unified facade.
+  - label: { ru: Вход, en: Entrance }
+    heading: { ru: Порог между городом и домом, en: A threshold between city and home }
+    body:
+      ru: Крупный темный козырек и прозрачное остекление формируют читаемый, защищенный вход со стороны улицы.
+      en: A broad dark canopy and transparent glazing form a legible, sheltered entrance from the street.
