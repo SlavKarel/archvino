@@ -41,22 +41,21 @@ const seo = await buildProjectSeo(locale, {
   image: project.cover.src,
 });
 
-const facts = [
-  {
-    label: locale === 'ru' ? 'Год' : 'Year',
-    value: project.year,
-  },
-  {
-    label: locale === 'ru' ? 'Место' : 'Location',
-    value: project.location,
-  },
-  {
-    label: locale === 'ru' ? 'Статус' : 'Status',
-    value: project.status,
-  },
-];
+const facts: Array<{ label: string; value: string | number }> = [];
 
-const eyebrow = `${categoryLabel} / ${project.year}`;
+if (project.year !== undefined) {
+  facts.push({ label: locale === 'ru' ? 'Год' : 'Year', value: project.year });
+}
+
+if (project.location) {
+  facts.push({ label: locale === 'ru' ? 'Место' : 'Location', value: project.location });
+}
+
+if (project.status) {
+  facts.push({ label: locale === 'ru' ? 'Статус' : 'Status', value: project.status });
+}
+
+const eyebrow = [categoryLabel, project.year].filter(Boolean).join(' / ');
 ---
 
 <ProjectLayout
@@ -76,3 +75,11 @@ const eyebrow = `${categoryLabel} / ${project.year}`;
   <ProjectGallery images={project.gallery} />
   <ProjectSections sections={project.sections} />
 </ProjectLayout>
+
+<script>
+  import initMotion from '../../../scripts/motion';
+  import initParallax from '../../../scripts/parallax';
+
+  initMotion();
+  initParallax();
+</script>
