@@ -58,7 +58,9 @@ const footerText = getLocalizedValue(settings.footerText, locale);
           </div>
         </div>
 
-        <img class="project-hero__image" src={heroSrc} alt={heroAlt} loading="eager" />
+        <div class="project-hero__media" data-parallax data-parallax-speed="0.1">
+          <img class="project-hero__image" src={heroSrc} alt={heroAlt} loading="eager" />
+        </div>
       </section>
 
       <div class="shell project-layout__body">
@@ -106,12 +108,23 @@ const footerText = getLocalizedValue(settings.footerText, locale);
     line-height: 1.7;
   }
 
+  .project-hero__media {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: calc(var(--radius-card) * 1.25);
+  }
+
   .project-hero__image {
+    position: absolute;
+    inset: -7% 0;
+    height: 114%;
     aspect-ratio: 16 / 10;
     width: 100%;
-    border-radius: calc(var(--radius-card) * 1.25);
     object-fit: cover;
     background: rgba(32, 32, 27, 0.08);
+    transform: translate3d(0, var(--parallax-y, 0px), 0);
+    will-change: transform;
   }
 
   .project-layout__body {
@@ -129,9 +142,15 @@ const footerText = getLocalizedValue(settings.footerText, locale);
       grid-template-columns: 1fr;
     }
 
-    .project-hero__image {
+    .project-hero__media {
       aspect-ratio: 4 / 5;
       border-radius: var(--radius-card);
     }
+
+    .project-hero__image { transform: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .project-hero__image { transform: none; }
   }
 </style>
