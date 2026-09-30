@@ -135,9 +135,9 @@ const projects = defineCollection({
   schema: z.object({
     slug: z.string(),
     category: z.enum(projectCategorySlugs),
-    year: z.number().int(),
-    location: localizedStringSchema,
-    status: localizedStringSchema,
+    year: z.number().int().optional(),
+    location: localizedStringSchema.optional(),
+    status: localizedStringSchema.optional(),
     featured: z.boolean(),
     order: z.number().int(),
     title: localizedStringSchema,
