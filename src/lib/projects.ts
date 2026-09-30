@@ -17,9 +17,9 @@ type ProjectSection = {
 type ProjectData = {
   slug: string;
   category: string;
-  year: number;
-  location: LocalizedString;
-  status: LocalizedString;
+  year?: number;
+  location?: LocalizedString;
+  status?: LocalizedString;
   featured: boolean;
   order: number;
   title: LocalizedString;
@@ -48,9 +48,9 @@ type CategorizableProject = {
 type LocalizedProject = {
   slug: string;
   category: string;
-  year: number;
-  location: string;
-  status: string;
+  year?: number;
+  location?: string;
+  status?: string;
   featured: boolean;
   order: number;
   title: string;
@@ -130,8 +130,8 @@ function localizeProject(project: ProjectData, locale: Locale): LocalizedProject
     slug: project.slug,
     category: project.category,
     year: project.year,
-    location: getLocalizedValue(project.location, locale),
-    status: getLocalizedValue(project.status, locale),
+    location: project.location ? getLocalizedValue(project.location, locale) : undefined,
+    status: project.status ? getLocalizedValue(project.status, locale) : undefined,
     featured: project.featured,
     order: project.order,
     title: getLocalizedValue(project.title, locale),

@@ -12,9 +12,9 @@ type SeoInput = {
 type ProjectSeoInput = {
   title: string;
   summary: string;
-  location: string;
-  year: number;
-  status: string;
+  location?: string;
+  year?: number;
+  status?: string;
   image?: string;
 };
 
@@ -42,11 +42,11 @@ export async function buildSeo(locale: Locale, input: SeoInput = {}) {
 export async function buildProjectSeo(locale: Locale, input: ProjectSeoInput) {
   const defaults = await buildDefaultSeo(locale);
   const title = `${input.title} | ${defaults.title}`;
-  const details = `${input.location}, ${input.year}. ${input.status}.`;
+  const details = [input.location, input.year, input.status].filter(Boolean).join(' · ');
 
   return buildSeo(locale, {
     title,
-    description: `${input.summary} ${details}`,
+    description: details ? `${input.summary} ${details}.` : input.summary,
     image: input.image,
   });
 }
